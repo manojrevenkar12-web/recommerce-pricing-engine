@@ -1,0 +1,45 @@
+# The pricing engine's policy settings, owned by the Team Lead Pricing & AI. Everything a business
+# owner may want to change without a code change is here; each setting says what it trades off.
+
+sell:
+  max_age_days: 365            # plan to sell or liquidate within this many days in stock
+  price_grid: [0.45, 2.0, 33]  # candidate prices: multiples of the market price for the condition (low, high, points)
+  max_weekly_change: 0.25      # a repricing moves a price by at most this share (liquidation excepted)
+  min_index: 0.45              # never below this multiple of the market price ...
+  max_index: 1.80              # ... nor above this one
+  max_share_of_new_price: 0.90 # a used copy never costs more than this share of the list price
+  liquidate_min_age_days: 60   # liquidate earlier only if the model is sure; not churn fresh stock
+  liquidate_margin_eur: 0.05   # liquidate when keeping is worth less than liquidating by this much
+  max_liquidation_share_per_week: 0.03   # no fire sales: at most this share of stock per week, least valuable first
+
+buy:
+  offer_grid: [0.10, 25.0, 48] # candidate offers in EUR (low, high, points, log-spaced)
+  max_offer_share: 0.45        # never offer more than this share of the market price
+  min_expected_profit: 0.03    # expected profit per item below this: "not buying this right now"
+  min_sellability_180d: 0.12   # inventory quality: do not buy what is unlikely to sell within 180 days
+  emergency_stop_fill: 0.985   # all buying stops above this fill, whatever the models say
+  long_term_weight: 1.0        # 0 ignores the effect of offers on sellers coming back
+
+capacity:
+  target_fill: 0.92            # the shadow price of a shelf slot rises when projected fill exceeds this
+  lookahead_days: 14
+  step: 0.0002                 # EUR per slot-day added per day for each percentage point of projected fill above target
+  max_price: 0.04              # EUR per slot-day
+  start_price: 0.0
+
+# Steering rules: price positioning by category, format and condition. A rule applies to every unit
+# or item it matches; the strictest bound wins. Bounds are multiples of the market price.
+steering:
+  - name: textbooks semester positioning
+    match: {category: textbooks}
+    sell: {max_index: 1.50}
+  - name: acceptable copies stay cheap
+    match: {grade: acceptable}
+    sell: {max_index: 1.10}
+  - name: games lose value fast
+    match: {category: games}
+    sell: {max_index: 1.30}
+    buy: {max_offer_share: 0.35}
+  - name: special editions keep their premium
+    match: {format: special_edition}
+    sell: {min_index: 0.60}

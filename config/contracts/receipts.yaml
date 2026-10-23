@@ -1,0 +1,14 @@
+source: receipts
+owner: Logistics IT (goods receipt and grading)
+description: Items received and graded; rejected items get no unit id and are not paid.
+key: []
+columns:
+  date: {type: date, required: true}
+  basket_id: {type: int, required: true, min: 1}
+  ean: {type: string, required: true, rule: ean13}
+  unit_id: {type: int, required: false, min: 1}
+  grade: {type: string, required: true, allowed: [like_new, very_good, good, acceptable, reject]}
+  paid_eur: {type: float, required: true, min: 0, max: 200}
+relations:
+  - {column: ean, references: [catalogue.ean]}
+  - {column: basket_id, references: [baskets.basket_id, opening_in_transit.basket_id]}

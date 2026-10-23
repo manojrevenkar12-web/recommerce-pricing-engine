@@ -1,0 +1,24 @@
+name: textbook-curriculum-switch
+description: >
+  In early March several federal states announce a new school and university curriculum. From that
+  day the old textbook editions are suddenly unwanted: buyer demand for textbooks halves overnight
+  and used-copy market prices slide 40% over the following month as competitors cut. At the same
+  time students and parents rush to sell their now-obsolete books, so seller sessions jump 60% for
+  two months before settling back. Heavy buying pressure meets collapsing resale value.
+capacity_factor: 1.0
+overrides:
+  - what: demand
+    factor: 0.5
+    categories: [textbooks]
+    start_day: 60
+    ramp_days: 1
+  - what: market_price
+    factor: 0.6
+    categories: [textbooks]
+    start_day: 60
+    ramp_days: 30
+  - what: sessions
+    factor: 1.6
+    start_day: 60
+    ramp_days: 7
+    end_day: 120

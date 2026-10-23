@@ -1,0 +1,19 @@
+name: spring-clearout-warehouse-squeeze
+description: >
+  One warehouse hall is closed for fire-safety refurbishment all half-year, leaving 35% fewer shelf
+  slots. Into that squeeze comes an unusually strong spring clean-out: seller sessions ramp up 80%
+  over a month from late February and stay high until mid-May. Meanwhile physical media keeps
+  fading as streaming spreads, with CD and DVD demand sliding 30% slowly across the whole period,
+  so the slow-moving stock that fills the shelves is exactly the stock that sells worst.
+capacity_factor: 0.65
+overrides:
+  - what: sessions
+    factor: 1.8
+    start_day: 50
+    ramp_days: 30
+    end_day: 130
+  - what: demand
+    factor: 0.7
+    categories: [cd, dvd]
+    start_day: 0
+    ramp_days: 181

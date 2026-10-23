@@ -1,0 +1,10 @@
+source: sales_ranks
+owner: Pricing (marketplace data)
+description: Monthly marketplace sales rank per title (1 = best seller).
+key: [date, ean]
+columns:
+  date: {type: date, required: true}
+  ean: {type: string, required: true, rule: ean13}
+  sales_rank: {type: int, required: true, min: 1}
+relations:
+  - {column: ean, references: [catalogue.ean]}

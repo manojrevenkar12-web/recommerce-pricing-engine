@@ -1,0 +1,16 @@
+source: offers
+owner: Buying App (seller app backend)
+description: Every offer shown in the app, one row per scanned item; 0 means "not buying this". test_multiplier is set when the offer was part of a randomised offer test.
+key: [offer_id]
+columns:
+  offer_id: {type: int, required: true, min: 1}
+  date: {type: date, required: true}
+  basket_id: {type: int, required: true, min: 1}
+  seller_id: {type: int, required: true, min: 0}
+  ean: {type: string, required: true, rule: ean13}
+  offer_eur: {type: float, required: true, min: 0, max: 200}
+  test_multiplier: {type: float, required: false, min: 0.5, max: 2.0}
+  kept: {type: bool, required: true}
+relations:
+  - {column: ean, references: [catalogue.ean]}
+  - {column: basket_id, references: [baskets.basket_id]}

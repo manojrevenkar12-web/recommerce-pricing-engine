@@ -1,0 +1,11 @@
+source: sales
+owner: Shop and marketplace order management
+description: Units sold, with the price paid and the fees charged.
+key: [unit_id]
+columns:
+  date: {type: date, required: true}
+  unit_id: {type: int, required: true, min: 1}
+  price_eur: {type: float, required: true, min_exclusive: 0, max: 2000}
+  fee_eur: {type: float, required: true, min: 0}
+relations:
+  - {column: unit_id, references: [receipts.unit_id, opening_stock.unit_id]}

@@ -1,0 +1,27 @@
+name: slow-burn-recession
+description: >
+  A gradual recession sets in. Over four months buyer demand across all categories erodes by 25%,
+  with discretionary games hit harder (a further 20%), and used market prices soften 15% as sellers
+  everywhere discount. At the same time households sell their shelves for cash, so seller sessions
+  rise 50% over three months. A smaller overflow warehouse is given up to save cost, leaving 15%
+  fewer slots. Nothing happens suddenly, so the change is easy to mistake for noise until stock
+  has already piled up.
+capacity_factor: 0.85
+overrides:
+  - what: demand
+    factor: 0.75
+    start_day: 10
+    ramp_days: 120
+  - what: demand
+    factor: 0.8
+    categories: [games]
+    start_day: 40
+    ramp_days: 90
+  - what: market_price
+    factor: 0.85
+    start_day: 20
+    ramp_days: 120
+  - what: sessions
+    factor: 1.5
+    start_day: 30
+    ramp_days: 90

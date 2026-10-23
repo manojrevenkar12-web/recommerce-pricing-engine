@@ -75,7 +75,7 @@ class World:
     def n(self) -> int:
         return len(self.ean)
 
-    def date(self, day: int) -> date:
+    def date_of(self, day: int) -> date:
         return self.start + timedelta(days=int(day))
 
     def day_of(self, d: date | str) -> int:
@@ -90,7 +90,7 @@ class World:
         return self.day_of(self.cfg["calendar"]["history_end"])
 
     def doy(self, day: int) -> int:
-        return self.date(day).timetuple().tm_yday
+        return self.date_of(day).timetuple().tm_yday
 
     # -- truth over time ----------------------------------------------------------------------
     def _override_factor(self, day: int, what: str) -> np.ndarray:
@@ -148,7 +148,7 @@ class World:
     def grade(self, idx: np.ndarray, day: int, seller_quality: np.ndarray, rng: np.random.Generator) -> np.ndarray:
         """Condition on arrival: 0..3 = like_new..acceptable, 4 = reject."""
         cfg = self.cfg["condition"]
-        years = np.maximum(0, self.date(day).year - self.pub_year[idx])
+        years = np.maximum(0, self.date_of(day).year - self.pub_year[idx])
         latent = rng.standard_normal(len(idx)) + self.grade_shift[idx] + cfg["age_shift_per_year"] * years + seller_quality
         return np.searchsorted(np.array(cfg["cutpoints"]), latent)
 
@@ -161,7 +161,7 @@ class World:
                 "format": self.fmt,
                 "language": self.language,
                 "pub_year": self.pub_year,
-                "release_date": [self.date(d).isoformat() for d in self.release_day],
+                "release_date": [self.date_of(d).isoformat() for d in self.release_day],
                 "new_price": np.round(self.new_price, 2),
             }
         )
@@ -208,7 +208,10 @@ def build(cfg: dict[str, Any] | None = None, seed: int | None = None) -> World:
     n = c["titles"]
     cat = rng.choice(len(cats), size=n, p=p / p.sum())
     names = np.array(cats)[cat]
-    P = {k: np.array([c["categories"][x][k] for x in names], dtype=float) for k in ("new_price", "value_ratio", "beta", "alpha", "pop_mu", "drift", "grade_shift", "kappa")}
+    P = {
+        k: np.array([c["categories"][x][k] for x in names], dtype=float)
+        for k in ("new_price", "value_ratio", "beta", "alpha", "pop_mu", "drift", "grade_shift", "kappa")
+    }
 
     is_book = np.isin(names, list(BOOKS))
     fmt = np.empty(n, dtype=object)
@@ -265,7 +268,9 @@ def build(cfg: dict[str, Any] | None = None, seed: int | None = None) -> World:
     codes = np.empty(n, dtype=object)
     serial = rng.permutation(10**6)[:n]
     for i in range(n):
-        codes[i] = ean.make("978" + ("3" if language[i] == "de" else "1"), serial[i]) if is_book[i] else ean.make(PREFIX[names[i]], serial[i])
+        codes[i] = (
+            ean.make("978" + ("3" if language[i] == "de" else "1"), serial[i]) if is_book[i] else ean.make(PREFIX[names[i]], serial[i])
+        )
 
     np_obs = new_price.copy()
     np_obs[rng.random(n) < c["missing_new_price"]] = np.nan
@@ -292,7 +297,7 @@ def build(cfg: dict[str, Any] | None = None, seed: int | None = None) -> World:
         quoted=quoted[order],
         edition_day=edition_day[order],
         grade_shift=P["grade_shift"][order],
-        supply_w=(lam0**cfg["sellers"]["supply_demand_power"])[order],
+        supply_w=(lam0 ** cfg["sellers"]["supply_demand_power"])[order],
         season_idx=season_idx[order],
         season_names=season_names,
         capacity=cfg["warehouse"]["capacity_units"],

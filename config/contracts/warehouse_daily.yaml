@@ -1,0 +1,9 @@
+source: warehouse_daily
+owner: Logistics IT (warehouse management system)
+description: End-of-day stock, parcels on the way and shelf capacity.
+key: [date]
+columns:
+  date: {type: date, required: true}
+  stock_units: {type: int, required: true, min: 0}
+  in_transit_units: {type: int, required: true, min: 0}
+  capacity_units: {type: int, required: true, min: 1}

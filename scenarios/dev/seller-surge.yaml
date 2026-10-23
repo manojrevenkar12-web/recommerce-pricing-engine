@@ -1,0 +1,5 @@
+name: seller-surge
+description: >
+  A TV campaign brings 60% more new sellers for eight weeks in spring.
+overrides:
+  - {what: sessions, factor: 1.6, start_day: 60, ramp_days: 7, end_day: 116}

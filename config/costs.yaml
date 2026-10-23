@@ -10,6 +10,7 @@ buy:
   basket_shipping: 4.00     # the seller's parcel label, paid by us per basket sent
   reject_disposal: 0.02     # recycling a rejected item
   min_offer: 0.10           # smallest offer shown; below it the app says "not buying this"
+  min_basket_eur: 10.0      # a seller can only send a parcel worth at least this
 stock:
   holding_per_unit_day: 0.004   # space, insurance, capital
   liquidation_value: 0.08       # bulk buyer pays per unit

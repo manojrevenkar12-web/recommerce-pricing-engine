@@ -1,0 +1,11 @@
+source: market_feed
+owner: Pricing (competitor price feed vendor)
+description: Daily lowest used-copy price offered by competitors on the marketplace, per title.
+key: [date, ean]
+columns:
+  date: {type: date, required: true}
+  ean: {type: string, required: true, rule: ean13}
+  lowest_used_price: {type: float, required: true, min_exclusive: 0, max: 2000}
+  n_offers: {type: int, required: true, min: 0}
+relations:
+  - {column: ean, references: [catalogue.ean]}

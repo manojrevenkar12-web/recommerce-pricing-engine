@@ -1,0 +1,13 @@
+source: opening_stock
+owner: Logistics IT (warehouse management system)
+description: Units on the shelf when the 2025 export starts.
+key: [unit_id]
+columns:
+  unit_id: {type: int, required: true, min: 1}
+  ean: {type: string, required: true, rule: ean13}
+  grade: {type: string, required: true, allowed: [like_new, very_good, good, acceptable]}
+  listed_date: {type: date, required: true}
+  price_eur: {type: float, required: true, min_exclusive: 0, max: 1000}
+  paid_eur: {type: float, required: true, min: 0, max: 200}
+relations:
+  - {column: ean, references: [catalogue.ean]}

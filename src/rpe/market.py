@@ -9,6 +9,7 @@ import pandas as pd
 from rpe.policy import MarketUpdate
 
 WINDOW = 56  # days of feed kept per title
+OWN_DECAY = float(np.exp(-1 / 60))  # own sales and listed days are counted with a 60-day memory
 
 
 class MarketView:
@@ -24,8 +25,10 @@ class MarketView:
         self._log = np.full((WINDOW, n_titles), np.nan, dtype=np.float32)  # ring buffer of log feed prices
         self._ring_day = np.full(WINDOW, -(10**6))
         self.day = -1
-        # own sales: count and price sum, decayed
-        self.sales_count = np.zeros(n_titles)
+        # our own sales and listed unit-days per title, exponentially decayed
+        self.own_sales = np.zeros(n_titles)
+        self.own_expo = np.zeros(n_titles)
+        self.own_day = -1
 
     def observe(self, u: MarketUpdate) -> None:
         if u.day != self.day:
@@ -46,7 +49,25 @@ class MarketView:
         if len(u.rank_idx):
             self.rank[u.rank_idx] = u.rank
         if len(u.sold_idx):
-            np.add.at(self.sales_count, u.sold_idx, 1.0)
+            self._decay_to(u.day)
+            np.add.at(self.own_sales, u.sold_idx, 1.0)
+
+    def _decay_to(self, day: int) -> None:
+        if self.own_day < 0:
+            self.own_day = day
+        elif day > self.own_day:
+            f = OWN_DECAY ** (day - self.own_day)
+            self.own_sales *= f
+            self.own_expo *= f
+            self.own_day = day
+
+    def observe_stock(self, day: int, listed_per_title: np.ndarray) -> None:
+        """Our listed copies per title today (once per day)."""
+        if day == getattr(self, "_stock_day", None):
+            return
+        self._stock_day = day
+        self._decay_to(day)
+        self.own_expo += listed_per_title
 
     def recent_log_prices(self, days: int) -> np.ndarray:
         """(days x titles) log feed prices of the last `days` days, NaN where missing."""
@@ -55,10 +76,19 @@ class MarketView:
         return self._log[keep]
 
     @classmethod
-    def from_history(cls, n_titles: int, feed: pd.DataFrame, quotes: pd.DataFrame, ranks: pd.DataFrame, as_of: int) -> MarketView:
+    def from_history(
+        cls, n_titles: int, feed: pd.DataFrame, quotes: pd.DataFrame, ranks: pd.DataFrame, as_of: int, units: pd.DataFrame | None = None
+    ) -> MarketView:
         """Rebuild the view as it stood at the end of `as_of` from the clean history tables (with a
-        title index `idx` and a `day` column)."""
+        title index `idx` and a `day` column; `units` from the warehouse for our own sales)."""
         mv = cls(n_titles)
+        if units is not None:
+            first = int(feed.day.min())
+            for d, sales, stock in own_history(n_titles, units, first, as_of):
+                mv._decay_to(d)
+                mv.own_sales += sales
+                mv.own_expo += stock
+            mv._stock_day = as_of
         f = feed[(feed.day > as_of - WINDOW) & (feed.day <= as_of)]
         for d, g in f.groupby("day", sort=True):
             mv.observe(MarketUpdate(int(d), g.idx.to_numpy(), g.price.to_numpy(), g.n_offers.to_numpy()))
@@ -76,3 +106,27 @@ class MarketView:
         mv.rank[r.idx.to_numpy()] = r["rank"].to_numpy()
         mv.day = as_of
         return mv
+
+
+def own_history(n_titles: int, units: pd.DataFrame, first: int, last: int):
+    """Per day from `first` to `last`: (day, our sales of the previous day, our listed copies),
+    per title, from the warehouse units table."""
+    days = last - first + 2
+    listed = units.listed_day.to_numpy().astype(int)
+    end = np.select(
+        [units.sold_day.notna(), units.disposed_day.notna()], [units.sold_day.fillna(0) + 1, units.disposed_day.fillna(0)], last + 1
+    ).astype(int)
+    idx = units.idx.to_numpy().astype(int)
+    diff = np.zeros((days + 1, n_titles), dtype=np.float32)
+    a = np.clip(listed - first, 0, days)
+    b = np.clip(end - first, 0, days)
+    np.add.at(diff, (a, idx), 1)
+    np.add.at(diff, (b, idx), -1)
+    stock = np.cumsum(diff, axis=0)
+    sold = units.sold_day.notna().to_numpy()
+    sd = units.sold_day.to_numpy()[sold].astype(int) - first
+    ok = (sd >= 0) & (sd < days)
+    sales = np.zeros((days + 1, n_titles), dtype=np.float32)
+    np.add.at(sales, (sd[ok] + 1, idx[sold][ok]), 1)  # seen the day after
+    for k in range(days - 1):
+        yield first + k, sales[k], stock[k]

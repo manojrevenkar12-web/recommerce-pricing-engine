@@ -1,0 +1,48 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Pricing steering</title><style>
+:root{--paper:#f4f6f3;--ink:#16302f;--muted:#5b6f6c;--rule:#d5ddd9;--good:#2a7a5f;--bad:#b23a48;--warn:#a86b12;--bar:#3f6f6a;--card:#ffffff}
+@media (prefers-color-scheme: dark){:root{--paper:#101716;--ink:#e3ece9;--muted:#9bb0ab;--rule:#2a3836;--good:#5cc29c;--bad:#e27a86;--warn:#e0a64a;--bar:#7fb3ab;--card:#16201f}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 ui-sans-serif,"Segoe UI",Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 56px}
+h1{font-size:26px;line-height:1.2;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
+h2{font-size:17px;margin:36px 0 12px;font-weight:650}
+.sub{color:var(--muted);margin:0 0 24px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.kpi{background:var(--card);padding:14px 16px}.kpi .v{font-size:24px;font-weight:650}.kpi .l{color:var(--muted);font-size:13px}
+.up{color:var(--good)}.down{color:var(--bad)}
+.alerts{list-style:none;padding:0;margin:0}.alerts li{background:var(--card);border-left:4px solid var(--warn);padding:10px 14px;margin:0 0 8px}
+.alerts li.red{border-left-color:var(--bad)}.alerts b{display:block}.alerts span{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+figure{margin:0;background:var(--card);padding:14px 16px;border:1px solid var(--rule)}figcaption{font-size:13px;color:var(--muted);margin-bottom:6px}
+svg text{fill:var(--muted);font-size:11px}
+table{border-collapse:collapse;width:100%;background:var(--card)}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);font-size:14px}
+th{color:var(--muted);font-weight:600}td.n{text-align:right}
+.barcell{width:40%}.barcell div{height:10px;background:var(--bar)}
+footer{color:var(--muted);font-size:13px;margin-top:40px}
+</style></head><body>
+<main>
+<h1>Books &amp; Media pricing</h1>
+<p class="sub">Weekly steering, week ending 2025-12-31. Last 4 weeks against the 4 before.</p>
+<section class="kpis">
+<div class="kpi"><div class="l">Revenue</div><div class="v">EUR 47,879 <span class="up">+1.6%</span></div></div>
+<div class="kpi"><div class="l">Gross margin</div><div class="v">EUR 37,970 <span class="up">+1.8%</span></div></div>
+<div class="kpi"><div class="l">Contribution</div><div class="v">EUR 13,825 <span class="down">-4.1%</span></div></div>
+<div class="kpi"><div class="l">Units sold</div><div class="v">7,870 <span class="up">-0.0%</span></div></div>
+<div class="kpi"><div class="l">Offers kept by sellers</div><div class="v">51.1%</div></div>
+<div class="kpi"><div class="l">Average sale price</div><div class="v">EUR 6.08</div></div>
+<div class="kpi"><div class="l">Average paid per unit</div><div class="v">EUR 1.04</div></div>
+<div class="kpi"><div class="l">Warehouse fill</div><div class="v">75%</div></div>
+</section>
+<h2>Alerts</h2>
+<ul class="alerts"><li class="amber"><b>Old stock</b>28% of stock listed for more than 180 days. <span>Review liquidation of copies whose expected value is below bulk value.</span></li></ul>
+<h2>Trends</h2>
+<div class="grid">
+<figure><figcaption>Revenue and contribution per week, EUR</figcaption><svg viewBox="0 0 460 160" width="100%" role="img" aria-label="revenue"><line x1="36" x2="448" y1="136.0" y2="136.0" stroke="var(--rule)"/><text x="2" y="140.0">0</text><line x1="36" x2="448" y1="73.0" y2="73.0" stroke="var(--rule)"/><text x="2" y="77.0">6,698</text><line x1="36" x2="448" y1="10.0" y2="10.0" stroke="var(--rule)"/><text x="2" y="14.0">13,396</text><path d="M36.0,35.4 L73.5,35.1 L110.9,39.8 L148.4,32.2 L185.8,28.0 L223.3,28.5 L260.7,24.3 L298.2,20.0 L335.6,19.3 L373.1,24.9 L410.5,24.6 L448.0,24.9" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M36.0,104.5 L73.5,107.0 L110.9,113.0 L148.4,110.3 L185.8,106.1 L223.3,100.0 L260.7,103.2 L298.2,99.1 L335.6,100.7 L373.1,101.7 L410.5,107.7 L448.0,103.8" fill="none" stroke="var(--good)" stroke-width="2" stroke-dasharray="4 3"/><text x="36.0" y="156">2025-10-09</text><text x="408.0" y="156">2025-12-25</text></svg><div style="font-size:12px;color:var(--muted)">— revenue &nbsp; - - contribution</div></figure>
+<figure><figcaption>Units in stock per week</figcaption><svg viewBox="0 0 460 160" width="100%" role="img" aria-label="stock"><line x1="36" x2="448" y1="136.0" y2="136.0" stroke="var(--rule)"/><text x="2" y="140.0">0</text><line x1="36" x2="448" y1="73.0" y2="73.0" stroke="var(--rule)"/><text x="2" y="77.0">15,052</text><line x1="36" x2="448" y1="10.0" y2="10.0" stroke="var(--rule)"/><text x="2" y="14.0">30,104</text><path d="M36.0,20.9 L73.5,20.8 L110.9,20.5 L148.4,20.5 L185.8,19.3 L223.3,20.7 L260.7,20.6 L298.2,22.1 L335.6,22.9 L373.1,23.2 L410.5,23.3 L448.0,23.4" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="36.0" y="156">2025-10-09</text><text x="408.0" y="156">2025-12-25</text></svg><div style="font-size:12px;color:var(--muted)">— stock</div></figure>
+<figure><figcaption>Competitor lowest prices, change over 4 weeks</figcaption><svg viewBox="0 0 460 230" width="100%" role="img" aria-label="competitor price change by category"><line x1="305.0" x2="305.0" y1="0" y2="230" stroke="var(--rule)"/><text x="0" y="17">bluray</text><rect x="248.9" y="6" width="56.1" height="14" fill="var(--bar)"/><text x="204.9" y="17">-0.8%</text><text x="0" y="39">cd</text><rect x="305.0" y="28" width="29.1" height="14" fill="var(--bar)"/><text x="338.1" y="39">+0.4%</text><text x="0" y="61">children</text><rect x="305.0" y="50" width="0.0" height="14" fill="var(--bar)"/><text x="309.0" y="61">+0.0%</text><text x="0" y="83">comics</text><rect x="305.0" y="72" width="48.5" height="14" fill="var(--bar)"/><text x="357.5" y="83">+0.7%</text><text x="0" y="105">cookbooks</text><rect x="305.0" y="94" width="34.6" height="14" fill="var(--bar)"/><text x="343.6" y="105">+0.5%</text><text x="0" y="127">dvd</text><rect x="305.0" y="116" width="23.5" height="14" fill="var(--bar)"/><text x="332.5" y="127">+0.3%</text><text x="0" y="149">fiction</text><rect x="278.0" y="138" width="27.0" height="14" fill="var(--bar)"/><text x="234.0" y="149">-0.4%</text><text x="0" y="171">games</text><rect x="236.5" y="160" width="68.5" height="14" fill="var(--bar)"/><text x="192.5" y="171">-1.0%</text><text x="0" y="193">nonfiction</text><rect x="269.0" y="182" width="36.0" height="14" fill="var(--bar)"/><text x="225.0" y="193">-0.5%</text><text x="0" y="215">textbooks</text><rect x="170.0" y="204" width="135.0" height="14" fill="var(--bar)"/><text x="126.0" y="215">-1.9%</text></svg></figure>
+</div>
+
+
+<h2>Experiments</h2>
+<table><tr><th>Experiment</th><th>Randomised by</th><th>Hypothesis</th></tr><tr><td><code>sell-engine-2026-01</code></td><td>title</td><td>Engine sell prices earn more per title than the rule-based repricer on the same stock.</td></tr><tr><td><code>buy-engine-2026-01</code></td><td>seller</td><td>Engine offers raise expected profit per scanned item without hurting seller return rates.</td></tr></table>
+<footer>Generated by <code>rpe steering</code> from the warehouse. Figures are from simulated data.</footer>
+</main></body></html>

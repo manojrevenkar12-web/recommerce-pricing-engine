@@ -21,8 +21,8 @@ WAREHOUSE = DATA / "warehouse.duckdb"
 
 
 @lru_cache
-def load(name: str) -> dict[str, Any]:
-    """config/<name>.yaml as a dict (cached; callers must not mutate it)."""
+def load(name: str) -> Any:
+    """config/<name>.yaml (cached; callers must not mutate it)."""
     return yaml.safe_load((CONFIG / f"{name}.yaml").read_text())
 
 

@@ -1,0 +1,10 @@
+source: buyback_quotes
+owner: Pricing (competitor buy-back monitoring)
+description: Weekly scraped buy-back quote of the main competitor, for a sample of titles.
+key: [date, ean]
+columns:
+  date: {type: date, required: true}
+  ean: {type: string, required: true, rule: ean13}
+  competitor_quote: {type: float, required: true, min_exclusive: 0, max: 500}
+relations:
+  - {column: ean, references: [catalogue.ean]}

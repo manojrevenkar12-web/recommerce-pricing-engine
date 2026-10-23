@@ -1,0 +1,13 @@
+source: baskets
+owner: Buying App (seller app backend)
+description: One row per seller session that ended with a basket of scanned items.
+key: [basket_id]
+columns:
+  basket_id: {type: int, required: true, min: 1}
+  date: {type: date, required: true}
+  seller_id: {type: int, required: true, min: 0}
+  visit: {type: int, required: true, min: 0}
+  items: {type: int, required: true, min: 1, max: 500}
+  offered_eur: {type: float, required: true, min: 0}
+  kept_eur: {type: float, required: true, min: 0}
+  sent: {type: bool, required: true}

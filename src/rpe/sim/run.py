@@ -173,7 +173,7 @@ class Simulator:
         offers = rng.poisson(f["offers_base"] + f["offers_scale"] * np.sqrt(lam[idx]))
         u = MarketUpdate(day, idx, price, offers)
         self.log.add("market_feed", day=day, idx=idx, price=price, n_offers=offers)
-        d = w.date(day)
+        d = w.date_of(day)
         if d.weekday() == 0:
             qi = np.flatnonzero(w.quoted & released)
             q = np.round(w.quote(day)[qi] * np.exp(rng.normal(0, f["quote_noise"], len(qi))), 2).clip(0.01)
@@ -205,8 +205,10 @@ class Simulator:
         arr = st.t_arrive == day
         if arr.any():
             ai = st.t_idx[arr]
-            years = np.maximum(0, w.date(day).year - w.pub_year[ai])
-            latent = st.t_latent[arr] + w.grade_shift[ai] + self.cfg["condition"]["age_shift_per_year"] * years + st.s_quality[st.t_seller[arr]]
+            years = np.maximum(0, w.date_of(day).year - w.pub_year[ai])
+            latent = (
+                st.t_latent[arr] + w.grade_shift[ai] + self.cfg["condition"]["age_shift_per_year"] * years + st.s_quality[st.t_seller[arr]]
+            )
             grade = np.searchsorted(self.cut, latent)
             rej = grade == REJECT
             L["inbound"] -= c["buy"]["inbound_handling"] * arr.sum()
@@ -239,7 +241,7 @@ class Simulator:
 
         # 2. pricing and liquidation ---------------------------------------------------------------
         wh = self._warehouse(st)
-        reprice = w.date(day).weekday() == 0
+        reprice = w.date_of(day).weekday() == 0
         needs = np.isnan(st.u_price) | reprice
         if len(st.u_id):
             units = Units(st.u_id.copy(), st.u_idx.copy(), st.u_grade.copy(), st.u_listed.copy(), st.u_price.copy(), needs)
@@ -353,7 +355,9 @@ class Simulator:
         for bnum, sid in enumerate(sellers):
             visit = int(st.s_visits[sid])
             r = np.random.default_rng([self.seed, 3, int(sid), visit])
-            size = 1 + r.negative_binomial(s["basket_dispersion"], s["basket_dispersion"] / (s["basket_dispersion"] + s["basket_mean_items"] - 1))
+            size = 1 + r.negative_binomial(
+                s["basket_dispersion"], s["basket_dispersion"] / (s["basket_dispersion"] + s["basket_mean_items"] - 1)
+            )
             items = np.searchsorted(cum, r.random(size) * cum[-1]).clip(0, w.n - 1)
             items = np.unique(items)
             res_noise = np.exp(r.normal(0, s["reservation_sigma"], len(items)))

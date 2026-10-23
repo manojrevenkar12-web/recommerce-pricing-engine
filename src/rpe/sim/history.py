@@ -63,11 +63,15 @@ def generate(raw: Path = RAW, truth: Path = TRUTH) -> dict[str, int]:
     tables: dict[str, pd.DataFrame] = {}
     tables["catalogue"] = w.catalogue_frame()
     f = L["market_feed"]
-    tables["market_feed"] = pd.DataFrame({"date": _dates(w, f.day).date, "ean": ean_of(f), "lowest_used_price": f.price, "n_offers": f.n_offers})
+    tables["market_feed"] = pd.DataFrame(
+        {"date": _dates(w, f.day).date, "ean": ean_of(f), "lowest_used_price": f.price, "n_offers": f.n_offers}
+    )
     q = L["buyback_quotes"]
     tables["buyback_quotes"] = pd.DataFrame({"date": _dates(w, q.day).date, "ean": ean_of(q), "competitor_quote": q.quote})
     r = L["sales_ranks"]
-    tables["sales_ranks"] = pd.DataFrame({"date": _dates(w, r.day).date, "ean": ean_of(r), "sales_rank": r["rank"].round().astype(np.int64)})
+    tables["sales_ranks"] = pd.DataFrame(
+        {"date": _dates(w, r.day).date, "ean": ean_of(r), "sales_rank": r["rank"].round().astype(np.int64)}
+    )
     o = L["offers"].reset_index(drop=True)
     tables["offers"] = pd.DataFrame(
         {
@@ -107,7 +111,9 @@ def generate(raw: Path = RAW, truth: Path = TRUTH) -> dict[str, int]:
         }
     )
     p = L["prices"]
-    tables["prices"] = pd.DataFrame({"date": _dates(w, p.day).date, "unit_id": p.unit_id, "price_eur": p.price, "test_multiplier": p.explore.round(4)})
+    tables["prices"] = pd.DataFrame(
+        {"date": _dates(w, p.day).date, "unit_id": p.unit_id, "price_eur": p.price, "test_multiplier": p.explore.round(4)}
+    )
     s = L["sales"]
     tables["sales"] = pd.DataFrame({"date": _dates(w, s.day).date, "unit_id": s.unit_id, "price_eur": s.price, "fee_eur": s.fee})
     d = L.get("disposals", pd.DataFrame(columns=["day", "unit_id", "kind"]))

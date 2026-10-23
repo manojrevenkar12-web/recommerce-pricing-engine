@@ -1,0 +1,4 @@
+name: capacity-cut
+description: >
+  One warehouse hall is closed for renovation: 25% fewer shelf slots for the whole period.
+capacity_factor: 0.75

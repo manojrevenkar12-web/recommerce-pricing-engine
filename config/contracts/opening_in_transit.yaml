@@ -1,0 +1,11 @@
+source: opening_in_transit
+owner: Logistics IT (warehouse management system)
+description: Seller parcels on their way when the 2025 export starts, one row per item.
+key: []
+columns:
+  basket_id: {type: int, required: true, min: 1}
+  ean: {type: string, required: true, rule: ean13}
+  expected_date: {type: date, required: true}
+  offer_eur: {type: float, required: true, min: 0, max: 200}
+relations:
+  - {column: ean, references: [catalogue.ean]}

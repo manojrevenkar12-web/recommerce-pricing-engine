@@ -1,0 +1,27 @@
+name: tv-adaptation-boom-bust
+description: >
+  A streaming series based on a fantasy book saga becomes a hit at the start of February. Fiction
+  demand nearly doubles overnight and used fiction prices climb 40% over three weeks as the market
+  catches up; the companion comics and graphic novels see a smaller 50% demand lift. The hype ends
+  abruptly when the season finishes at the start of April: demand and prices snap back to normal,
+  leaving anyone who bought heavily at boom prices holding expensive stock.
+capacity_factor: 1.0
+overrides:
+  - what: demand
+    factor: 1.9
+    categories: [fiction]
+    start_day: 30
+    ramp_days: 1
+    end_day: 90
+  - what: market_price
+    factor: 1.4
+    categories: [fiction]
+    start_day: 30
+    ramp_days: 21
+    end_day: 90
+  - what: demand
+    factor: 1.5
+    categories: [comics]
+    start_day: 35
+    ramp_days: 10
+    end_day: 90

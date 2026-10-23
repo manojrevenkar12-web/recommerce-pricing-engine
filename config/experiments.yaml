@@ -1,0 +1,18 @@
+# Experiment registry. Assignment is deterministic from (unit id, salt), so the shop, the app and
+# the analysis agree on arms without a lookup table.
+- id: sell-engine-2026-01
+  hypothesis: Engine sell prices earn more per title than the rule-based repricer on the same stock.
+  unit: title
+  salt: 4812
+  treatment_share: 0.5
+  primary: cohort_value_per_title      # sales net of fees and handling, holding cost, liquidation, book value of unsold copies
+  guardrails: [units_sold_per_title, liquidations_per_title]
+  analysis: {method: cuped, covariate: sales_eur_last_8_weeks, sequential: msprt}
+- id: buy-engine-2026-01
+  hypothesis: Engine offers raise expected profit per scanned item without hurting seller return rates.
+  unit: seller
+  salt: 815
+  treatment_share: 0.5
+  primary: expected_profit_per_item
+  guardrails: [basket_sent_rate, surrogate_return_rate_120d]
+  analysis: {method: welch, long_term: surrogate_index}

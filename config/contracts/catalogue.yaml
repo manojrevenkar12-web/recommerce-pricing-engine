@@ -1,0 +1,12 @@
+source: catalogue
+owner: Category Management (wholesale title data)
+description: One row per title (EAN/ISBN-13) with its bibliographic attributes and list price.
+key: [ean]
+columns:
+  ean: {type: string, required: true, rule: ean13}
+  category: {type: string, required: true, allowed: [fiction, nonfiction, children, textbooks, cookbooks, comics, cd, dvd, bluray, games]}
+  format: {type: string, required: true, allowed: [paperback, hardcover, special_edition, standard]}
+  language: {type: string, required: true, allowed: [de, en]}
+  pub_year: {type: int, required: true, min: 1900, max: 2027}
+  release_date: {type: string, required: true}
+  new_price: {type: float, required: false, min_exclusive: 0, max: 500}

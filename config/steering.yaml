@@ -1,0 +1,9 @@
+# Weekly steering report for Books & Media BU management: what is watched and when it alerts.
+weeks_shown: 12
+alerts:
+  acceptance_drop_pp: 5          # share of offers sellers keep falls by more than this vs the previous 4 weeks
+  fill_above: 0.90               # warehouse fill (stock + parcels on the way) above this
+  aged_stock_share_above: 0.25   # share of stock listed for more than 180 days
+  margin_per_unit_drop: 0.10     # gross margin per unit sold falls by more than this share vs the previous 4 weeks
+  category_price_drop: 0.10      # competitor prices in a category fall by more than this over 4 weeks (price war watch)
+  sell_through_drop: 0.10        # units sold per unit in stock falls by more than this share

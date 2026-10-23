@@ -1,0 +1,25 @@
+name: competitor-exit-and-reentry
+description: >
+  A major buy-back competitor shuts its app in late January. Its sellers move over, so seller
+  sessions jump 70% almost at once, and with one fewer reseller online the market prices of games,
+  Blu-ray and DVD drift 20% higher over a month. In mid-April the brand is relaunched by a new owner
+  with an aggressive price war on games: the extra sellers disappear, and games prices fall over
+  two weeks to 30% below the original level and stay there through June.
+capacity_factor: 1.0
+overrides:
+  - what: sessions
+    factor: 1.7
+    start_day: 20
+    ramp_days: 3
+    end_day: 105
+  - what: market_price
+    factor: 1.2
+    categories: [games, bluray, dvd]
+    start_day: 20
+    ramp_days: 30
+    end_day: 105
+  - what: market_price
+    factor: 0.7
+    categories: [games]
+    start_day: 106
+    ramp_days: 14

@@ -1,0 +1,5 @@
+name: textbook-demand-shift
+description: >
+  A curriculum reform cuts demand for used textbooks by 40% from February.
+overrides:
+  - {what: demand, factor: 0.6, categories: [textbooks], start_day: 31, ramp_days: 14}

@@ -1,0 +1,10 @@
+source: disposals
+owner: Logistics IT (warehouse management system)
+description: Units leaving stock without a sale (sold in bulk to a liquidator).
+key: [unit_id]
+columns:
+  date: {type: date, required: true}
+  unit_id: {type: int, required: true, min: 1}
+  kind: {type: string, required: true, allowed: [liquidation]}
+relations:
+  - {column: unit_id, references: [receipts.unit_id, opening_stock.unit_id]}

@@ -1,0 +1,11 @@
+source: prices
+owner: Pricing Engineering (repricer)
+description: Every listing price set, per unit. test_multiplier is set when the unit's title was in a randomised price test.
+key: [date, unit_id]
+columns:
+  date: {type: date, required: true}
+  unit_id: {type: int, required: true, min: 1}
+  price_eur: {type: float, required: true, min_exclusive: 0, max: 2000}
+  test_multiplier: {type: float, required: false, min: 0.5, max: 2.0}
+relations:
+  - {column: unit_id, references: [receipts.unit_id, opening_stock.unit_id]}

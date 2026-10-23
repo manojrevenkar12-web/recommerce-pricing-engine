@@ -1,0 +1,36 @@
+# The release gate. `rpe eval` measures, `rpe gate` decides. A blocking check that fails stops a
+# release; tracked results are reported but do not block (held-out results in particular are
+# reported, never tuned to: see scenarios/heldout/FIRST_RUN.md).
+backtest:
+  seeds: [101, 102, 103, 104, 105]
+  ablation_seeds: [101, 102]
+  long_run_days: 728
+  long_run_seed: 101
+  value_per_pending_return_eur: 10.0   # what a seller coming back is worth, for the "incl. sellers" view
+experiments:
+  sell_test_seeds: [401, 402, 403, 404]
+
+blocking:
+  contracts_bad_rows_caught:          {min: 1.0,   why: "every injected bad row is quarantined"}
+  contracts_good_rows_quarantined:    {max: 0,     why: "no valid row is lost"}
+  engine_value_uplift_pct:            {min: 10.0,  why: "six-month value (cash + end stock) vs today's rules"}
+  engine_value_uplift_pct_lo:         {min: 0.0,   why: "lower end of its 95% interval over market replays"}
+  seller_returns_vs_baseline:         {min: 0.95,  why: "the engine does not buy margin by driving sellers away"}
+  overflow_unit_days:                 {max: 0,     why: "never more stock than shelf slots"}
+  guardrail_violations:               {max: 0,     why: "every engine price within its guardrails"}
+  market_error_feed_vs_rule:          {max: 1.0,   why: "market price at least as accurate as the last competitor price"}
+  market_error_cold_vs_rule:          {max: 1.0,   why: "cold-start price at least as accurate as the list-price rule"}
+  demand_calibration_ratio:           {min: 0.9, max: 1.1, why: "predicted vs true sales of the stock"}
+  sellability_ece:                    {max: 0.06,  why: "90-day sellability calibrated against realised sales"}
+  sellability_auc_gain_vs_rank:       {min: 0.05,  why: "ranks stock better than the sales rank the rules use"}
+  aa_false_positive_rate:             {min: 0.02, max: 0.08, why: "A/A tests analysed by title reject about 5%"}
+  sequential_false_positive_rate:     {max: 0.05,  why: "daily-peeked tests stay within 5% with the always-valid p-value"}
+  sell_test_ci_coverage:              {min: 0.75,  why: "the price test's interval contains the true effect"}
+  scenario_overflow_unit_days:        {max: 0,     why: "no overflow in any stress scenario"}
+  scenario_guardrail_violations:      {max: 0,     why: "guardrails hold in every stress scenario"}
+
+tracked:
+  - heldout_scenarios_engine_ahead
+  - surrogate_intervals_overlap
+  - long_run_cash_uplift_pct
+  - price_response_mean_abs_rel_error
