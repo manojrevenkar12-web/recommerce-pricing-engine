@@ -105,13 +105,13 @@ class MarketPriceModel:
         # out-of-sample spread: hold out half of the titles
         title_half = rows["title"].to_numpy() % 2 == 0
         a = lgb.train(PARAMS, lgb.Dataset(X[title_half], y[title_half], categorical_feature=cats), 400)
-        sigma_model = float(np.std(y[~title_half] - a.predict(X[~title_half])))
+        sigma_model = float(np.std(y[~title_half] - np.asarray(a.predict(X[~title_half]))))
         return cls(mid, lo, hi, sigma_model, float(np.nanmedian(rows["feed_sd"])))
 
     def cold(self, cat: Catalog, snap: Snapshot) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Cold-start log price (P50, P10, P90) for every title from its attributes."""
         X = title_features(cat, snap, snap.day, np.full(cat.n, np.nan), snap.n)
-        mid, lo, hi = (b.predict(X[COLD_FEATURES]) for b in (self.mid, self.lo, self.hi))
+        mid, lo, hi = (np.asarray(b.predict(X[COLD_FEATURES])) for b in (self.mid, self.lo, self.hi))
         return mid, lo, hi
 
     def estimate(self, cat: Catalog, snap: Snapshot, cold: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None) -> MarketEstimate:

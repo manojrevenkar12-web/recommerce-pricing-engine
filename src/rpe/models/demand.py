@@ -51,7 +51,7 @@ def _sigmoid(x: np.ndarray) -> np.ndarray:
 def cloglog_objective(preds: np.ndarray, data: lgb.Dataset) -> tuple[np.ndarray, np.ndarray]:
     """Gradient and hessian of the negative log-likelihood of "sold within the exposure" when the
     raw score is the log of the expected number of sales: P(sold) = 1 - exp(-exp(score))."""
-    y = data.get_label()
+    y = np.asarray(data.get_label())
     mu = np.exp(np.clip(preds, -30, 8))
     em = np.exp(-mu)
     P = np.maximum(-np.expm1(-mu), 1e-12)
@@ -84,7 +84,7 @@ class DemandModel:
 
     def log_rate(self, X: pd.DataFrame) -> np.ndarray:
         """log daily sale intensity of a title's demand at share 1 (before splitting it over copies)."""
-        return self.booster.predict(X[UNIT_FEATURES], raw_score=True)
+        return np.asarray(self.booster.predict(X[UNIT_FEATURES], raw_score=True))
 
     def rel(self, log_price: np.ndarray, log_market: np.ndarray, grade: np.ndarray) -> np.ndarray:
         return log_price - log_market - self.log_q[grade]
@@ -142,7 +142,7 @@ class DemandModel:
                 X, y, init_score=np.log(e) + log_s - theta * ld + lz, categorical_feature=["category", "fmt"], free_raw_data=False
             )
             booster = lgb.train({**GBM, "objective": cloglog_objective}, ds, gbm_rounds)
-            f = booster.predict(X, raw_score=True)
+            f = np.asarray(booster.predict(X, raw_score=True))
             beta, alpha, log_q, theta, nll = _fit_response(
                 y[test], e[test], f[test] + lz[test], lp[test] - lm[test], ld[test], g[test], cat[test], beta, alpha, log_q, theta
             )
@@ -159,7 +159,7 @@ class DemandModel:
                         X[part], y[part], init_score=(np.log(e) + log_s - theta * ld + lz)[part], categorical_feature=["category", "fmt"]
                     )
                     b_ = lgb.train({**GBM, "objective": cloglog_objective}, sub, gbm_rounds)
-                    f_oof[~part] = b_.predict(X[~part], raw_score=True)
+                    f_oof[~part] = np.asarray(b_.predict(X[~part], raw_score=True))
                 h_oof = e * np.exp(f_oof - np.logaddexp(0, beta[cat] * (r - alpha[cat])) - theta * ld)
                 Hb_oof = pd.Series(h_oof).groupby(unit).cumsum().to_numpy() - h_oof
                 k = _fit_frailty(Hb_oof[last], h_oof[last], y[last])

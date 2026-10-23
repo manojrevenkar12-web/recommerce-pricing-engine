@@ -354,8 +354,8 @@ class Simulator:
         # each seller visit gets its own random stream: same items whatever the policy
         b_rows = []
         for bnum, sid in enumerate(sellers):
-            visit = int(st.s_visits[sid])
-            r = np.random.default_rng([self.seed, 3, int(sid), visit])
+            v_no = int(st.s_visits[sid])
+            r = np.random.default_rng([self.seed, 3, int(sid), v_no])
             size = 1 + r.negative_binomial(
                 s["basket_dispersion"], s["basket_dispersion"] / (s["basket_dispersion"] + s["basket_mean_items"] - 1)
             )
@@ -364,9 +364,9 @@ class Simulator:
             res_noise = np.exp(r.normal(0, s["reservation_sigma"], len(items)))
             latent = r.standard_normal(len(items))
             ship = r.integers(s["shipping_days"][0], s["shipping_days"][1] + 1)
-            u_ret = r.random()
+            u_one = r.random()
             delay = r.integers(s["return_delay_days"][0], s["return_delay_days"][1] + 1)
-            b_rows.append((bnum, sid, visit, items, res_noise, latent, ship, u_ret, delay))
+            b_rows.append((bnum, sid, v_no, items, res_noise, latent, ship, u_one, delay))
         basket = np.concatenate([np.full(len(b[3]), b[0]) for b in b_rows])
         seller = np.concatenate([np.full(len(b[3]), b[1]) for b in b_rows])
         visit = np.concatenate([np.full(len(b[3]), b[2]) for b in b_rows])
