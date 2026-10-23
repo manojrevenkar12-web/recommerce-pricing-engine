@@ -143,6 +143,7 @@ class Simulator:
             "overflow_unit_days": 0,
             "max_fill": 0.0,
             "returns_scheduled": 0,
+            "items_bought_while_full": 0,
         }
         daily = []
         price_rows: list[pd.DataFrame] = []
@@ -371,6 +372,7 @@ class Simulator:
         visit = np.concatenate([np.full(len(b[3]), b[2]) for b in b_rows])
         idx = np.concatenate([b[3] for b in b_rows]).astype(np.int64)
         items = Items(basket, seller, visit, idx)
+        full = len(st.u_id) + len(st.t_idx) >= w.capacity
         dec = policy.offer(day, items, self._warehouse(st))
         offer = np.round(np.where(dec.offer >= c["buy"]["min_offer"], dec.offer, 0.0), 2)
         q = w.quote(day)[idx]
@@ -426,6 +428,8 @@ class Simulator:
             st.t_basket = np.concatenate([st.t_basket, basket_ids[basket[go]]])
         L["basket_shipping"] -= c["buy"]["basket_shipping"] * sent.sum()
         C["items_kept"] += int(go.sum())
+        if full:
+            C["items_bought_while_full"] += int(go.sum())
 
         # will they come back?
         logit = np.where(

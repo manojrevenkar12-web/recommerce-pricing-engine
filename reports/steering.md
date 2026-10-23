@@ -36,6 +36,20 @@ Stock: 26,954 units, warehouse fill 75%; 28% of stock listed for more than 180 d
 | nonfiction | -0.5% | 1531 |
 | textbooks | -1.9% | 702 |
 
+## The pricing engine against today's rules
+
+Backtest over six months on 5 market replays: value (cash plus the value of stock at the end) +37.0% (95% interval +35.8% to +38.3%), cash in the period -23.7%; sellers who will come back +75.4%.
+
+## AI roadmap, ranked by measured value (six months, EUR)
+
+| use case | value | 95% interval |
+|---|---|---|
+| Warehouse-aware buying and selling (shelf price) | 30,652 | 28,984 to 32,320 |
+| Buy offers and buy/no-buy (sellability, acceptance, copies in stock) | 26,284 | 25,848 to 26,720 |
+| Market price definition (robust feed price, cold start for new titles) | 19,531 | 18,395 to 20,667 |
+| Dynamic sell prices and liquidation (demand and price response) | 18,306 | 17,770 to 18,842 |
+| Long-term seller value in offers | -5,312 | -5,482 to -5,142 |
+
 ## Experiments
 
 - `sell-engine-2026-01` (by title): Engine sell prices earn more per title than the rule-based repricer on the same stock.

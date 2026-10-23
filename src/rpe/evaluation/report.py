@@ -51,7 +51,7 @@ def write(path: Path = REPORTS / "evaluation.json", out: Path = REPORTS / "EVALU
         ("cash", "Cash contribution in the period, EUR"),
         ("value_incl_sellers", "Value incl. returning sellers, EUR"),
         ("revenue", "Revenue, EUR"),
-        ("gross_margin", "Gross margin, EUR"),
+        ("revenue_minus_purchases", "Revenue minus purchase spend, EUR"),
         ("pending_returns", "Sellers who will come back"),
         ("units_sold", "Units sold"),
         ("units_bought", "Units bought"),
@@ -110,13 +110,14 @@ def write(path: Path = REPORTS / "evaluation.json", out: Path = REPORTS / "EVALU
         L += [
             f"**{title}**",
             "",
-            "| scenario | rules: value | engine: value | engine vs rules | sellers coming back (engine / rules) | engine max fill | overflow unit-days (engine / rules) | violations |",
-            "|---|---|---|---|---|---|---|---|",
+            "| scenario | rules: value | engine: value | engine vs rules | sellers coming back (engine / rules) | engine max fill | overflow unit-days (engine / rules) | bought while full (engine / rules) | violations |",
+            "|---|---|---|---|---|---|---|---|---|",
         ]
         for x in sc:
             L.append(
                 f"| {x['scenario']} | {_e(x['baseline_value'])} | {_e(x['engine_value'])} | {x['uplift_pct']:+.1f}% | {x['engine_returns_vs_baseline']:.2f} | "
-                f"{x['engine_max_fill']:.1%} | {x['engine_overflow_unit_days']:,} / {x['baseline_overflow_unit_days']:,} | {x['engine_guardrail_violations']} |"
+                f"{x['engine_max_fill']:.1%} | {x['engine_overflow_unit_days']:,} / {x['baseline_overflow_unit_days']:,} | "
+                f"{x.get('engine_items_bought_while_full', 0):,} / {x.get('baseline_items_bought_while_full', 0):,} | {x['engine_guardrail_violations']} |"
             )
         L.append("")
     fr = bt["scenarios"].get("heldout_first_run")

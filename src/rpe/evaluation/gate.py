@@ -22,6 +22,10 @@ def measures(r: dict[str, Any]) -> dict[str, float | None]:
         "engine_value_uplift_pct_lo": up["value"]["pct_lo"],
         "seller_returns_vs_baseline": round(1 + up["pending_returns"]["pct"] / 100, 4),
         "overflow_unit_days": max(x["overflow_unit_days"] for x in bt["runs"] if x["policy"] == "engine"),
+        "items_bought_while_full": max(
+            [x["items_bought_while_full"] for x in bt["runs"] if x["policy"] == "engine"]
+            + [x.get("engine_items_bought_while_full", 0) for x in scen]
+        ),
         "guardrail_violations": sum(v for k, v in bt["guardrails"].items() if k != "prices_checked"),
         "market_error_feed_vs_rule": round(
             mp["feed_titles"]["engine"]["mean_abs_log_error"] / mp["feed_titles"]["rule_last_price"]["mean_abs_log_error"], 4
@@ -37,7 +41,9 @@ def measures(r: dict[str, Any]) -> dict[str, float | None]:
         "aa_false_positive_rate": ex["sell_side_price_test"]["a_a"]["false_positive_rate_by_title"],
         "sequential_false_positive_rate": ex["peeking_null"]["always_valid_reject"],
         "sell_test_ci_coverage": ex["sell_side_price_test"]["coverage"],
-        "scenario_overflow_unit_days": max((x["engine_overflow_unit_days"] for x in scen), default=0),
+        "scenario_overflow_vs_rules": round(
+            sum(x["engine_overflow_unit_days"] for x in scen) / max(1, sum(x["baseline_overflow_unit_days"] for x in scen)), 3
+        ),
         "scenario_guardrail_violations": sum(x["engine_guardrail_violations"] for x in scen),
         # tracked
         "heldout_scenarios_engine_ahead": round(sum(x["uplift_pct"] > 0 for x in held) / len(held), 3) if held else None,

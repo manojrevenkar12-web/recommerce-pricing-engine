@@ -13,7 +13,8 @@ main{max-width:1040px;margin:0 auto;padding:28px 16px 56px}
 h1{font-size:26px;line-height:1.2;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
 h2{font-size:17px;margin:36px 0 12px;font-weight:650}
 .sub{color:var(--muted);margin:0 0 24px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}.kpi .v{font-size:20px}.barcell{display:none}td,th{padding:6px}}
 .kpi{background:var(--card);padding:14px 16px}.kpi .v{font-size:24px;font-weight:650}.kpi .l{color:var(--muted);font-size:13px}
 .up{color:var(--good)}.down{color:var(--bad)}
 .alerts{list-style:none;padding:0;margin:0}.alerts li{background:var(--card);border-left:4px solid var(--warn);padding:10px 14px;margin:0 0 8px}
@@ -50,8 +51,8 @@ def _line(
     out.append(f'<path d="{path(points)}" fill="none" stroke="var(--ink)" stroke-width="2"/>')
     if points2:
         out.append(f'<path d="{path(points2)}" fill="none" stroke="var(--good)" stroke-width="2" stroke-dasharray="4 3"/>')
-    for i in (0, n - 1):
-        out.append(f'<text x="{xy(i, lo)[0] - (40 if i else 0):.1f}" y="{h - 4}">{html.escape(labels[i])}</text>')
+    out.append(f'<text x="36" y="{h - 4}">{html.escape(labels[0])}</text>')
+    out.append(f'<text x="{w - 12}" y="{h - 4}" text-anchor="end">{html.escape(labels[-1])}</text>')
     out.append("</svg>")
     legend = (
         f'<div style="font-size:12px;color:var(--muted)">— {html.escape(names[0])}'
@@ -86,7 +87,7 @@ def _kpi(label: str, value: str, change: float | None) -> str:
     ch = ""
     if change is not None:
         cls = "up" if change >= 0 else "down"
-        ch = f' <span class="{cls}">{change:+.1f}%</span>'
+        ch = f' <span class="{cls}">{change:+.1f}%</span>' if abs(change) >= 0.05 else " <span>±0.0%</span>"
     return f'<div class="kpi"><div class="l">{html.escape(label)}</div><div class="v">{value}{ch}</div></div>'
 
 

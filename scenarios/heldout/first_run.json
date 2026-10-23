@@ -1,0 +1,70 @@
+{
+  "recorded_at": "2026-10-23T14:55:31+00:00",
+  "results": [
+    {
+      "scenario": "competitor-exit-and-reentry",
+      "baseline_value": 140865.37,
+      "engine_value": 194638.26,
+      "uplift_pct": 38.17,
+      "engine_cash": 40104.29,
+      "baseline_cash": 55674.01,
+      "engine_returns_vs_baseline": 2.042,
+      "engine_max_fill": 0.8831,
+      "engine_overflow_unit_days": 0,
+      "baseline_overflow_unit_days": 0,
+      "engine_guardrail_violations": 0
+    },
+    {
+      "scenario": "slow-burn-recession",
+      "baseline_value": 86658.94,
+      "engine_value": 116985.29,
+      "uplift_pct": 35.0,
+      "engine_cash": 14421.49,
+      "baseline_cash": 34534.91,
+      "engine_returns_vs_baseline": 2.512,
+      "engine_max_fill": 0.9103,
+      "engine_overflow_unit_days": 0,
+      "baseline_overflow_unit_days": 0,
+      "engine_guardrail_violations": 0
+    },
+    {
+      "scenario": "spring-clearout-warehouse-squeeze",
+      "baseline_value": 127454.35,
+      "engine_value": 190380.45,
+      "uplift_pct": 49.37,
+      "engine_cash": 67692.49,
+      "baseline_cash": 67292.15,
+      "engine_returns_vs_baseline": 2.332,
+      "engine_max_fill": 1.1619,
+      "engine_overflow_unit_days": 32195,
+      "baseline_overflow_unit_days": 47804,
+      "engine_guardrail_violations": 0
+    },
+    {
+      "scenario": "textbook-curriculum-switch",
+      "baseline_value": 128752.68,
+      "engine_value": 170301.2,
+      "uplift_pct": 32.27,
+      "engine_cash": 29963.19,
+      "baseline_cash": 46947.57,
+      "engine_returns_vs_baseline": 1.963,
+      "engine_max_fill": 0.8881,
+      "engine_overflow_unit_days": 0,
+      "baseline_overflow_unit_days": 0,
+      "engine_guardrail_violations": 0
+    },
+    {
+      "scenario": "tv-adaptation-boom-bust",
+      "baseline_value": 160166.61,
+      "engine_value": 215075.56,
+      "uplift_pct": 34.28,
+      "engine_cash": 63280.3,
+      "baseline_cash": 80036.34,
+      "engine_returns_vs_baseline": 1.727,
+      "engine_max_fill": 0.8842,
+      "engine_overflow_unit_days": 0,
+      "baseline_overflow_unit_days": 0,
+      "engine_guardrail_violations": 0
+    }
+  ]
+}

@@ -67,7 +67,16 @@ def evaluate(workers: int | None = None, out: Path = REPORTS) -> dict[str, Any]:
 
     up = {
         m: paired_uplift(main, m, "engine")
-        for m in ("value", "cash", "value_incl_sellers", "revenue", "gross_margin", "pending_returns", "units_sold", "units_bought")
+        for m in (
+            "value",
+            "cash",
+            "value_incl_sellers",
+            "revenue",
+            "revenue_minus_purchases",
+            "pending_returns",
+            "units_sold",
+            "units_bought",
+        )
     }
     headline = {
         "seeds": len(bt["seeds"]),
@@ -127,6 +136,7 @@ def evaluate(workers: int | None = None, out: Path = REPORTS) -> dict[str, Any]:
                             "pending_returns",
                             "max_fill",
                             "overflow_unit_days",
+                            "items_bought_while_full",
                             "units_bought",
                             "units_sold",
                             "units_liquidated",
@@ -152,6 +162,8 @@ def evaluate(workers: int | None = None, out: Path = REPORTS) -> dict[str, Any]:
                     "engine_max_fill": e.max_fill,
                     "engine_overflow_unit_days": int(e.overflow_unit_days),
                     "baseline_overflow_unit_days": int(b.overflow_unit_days),
+                    "engine_items_bought_while_full": int(e.items_bought_while_full),
+                    "baseline_items_bought_while_full": int(b.items_bought_while_full),
                     "engine_guardrail_violations": int(sum(v for k, v in e.violations.items() if k != "prices_checked")),
                 }
             )

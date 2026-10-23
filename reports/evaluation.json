@@ -1,0 +1,1343 @@
+{
+  "generated_at": "2026-10-23T15:23:02+00:00",
+  "model_card": {
+    "trained_at": "2026-10-23T13:51:15+00:00",
+    "history": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "data_fingerprint": "87943e438077",
+    "rows": {
+      "market_snapshots": 49,
+      "demand_unit_weeks": 1295987,
+      "demand_test_rows": 258236,
+      "offers": 335745
+    },
+    "price_response": {
+      "bluray": {
+        "beta": 4.635,
+        "alpha": 0.025
+      },
+      "cd": {
+        "beta": 4.472,
+        "alpha": -0.017
+      },
+      "children": {
+        "beta": 4.335,
+        "alpha": 0.036
+      },
+      "comics": {
+        "beta": 3.85,
+        "alpha": 0.045
+      },
+      "cookbooks": {
+        "beta": 3.591,
+        "alpha": 0.058
+      },
+      "dvd": {
+        "beta": 5.662,
+        "alpha": -0.042
+      },
+      "fiction": {
+        "beta": 5.333,
+        "alpha": 0.058
+      },
+      "games": {
+        "beta": 3.408,
+        "alpha": 0.088
+      },
+      "nonfiction": {
+        "beta": 3.933,
+        "alpha": -0.03
+      },
+      "textbooks": {
+        "beta": 1.86,
+        "alpha": 0.126
+      }
+    },
+    "condition_factors": {
+      "like_new": 1.099,
+      "very_good": 1.0,
+      "good": 0.881,
+      "acceptable": 0.711
+    },
+    "acceptance": {
+      "rows": 335745,
+      "test_rows": 50205,
+      "slope_vs_competitor_quote": 3.568,
+      "slope_without_quote": 2.898,
+      "kappa": {
+        "bluray": 0.121,
+        "cd": 0.112,
+        "children": 0.119,
+        "comics": 0.138,
+        "cookbooks": 0.12,
+        "dvd": 0.101,
+        "fiction": 0.134,
+        "games": 0.152,
+        "nonfiction": 0.129,
+        "textbooks": 0.163
+      }
+    },
+    "seller_value": {
+      "rows": 12666,
+      "return_rate_120d": 0.227,
+      "slope_log_satisfaction_sent": 1.259,
+      "value_per_return_eur": 12.42,
+      "marginal_value_eur_per_log_sat": 3.4
+    },
+    "items_per_parcel": 15.45
+  },
+  "contracts": {
+    "injected": {
+      "catalogue": 60,
+      "market_feed": 8191,
+      "offers": 479,
+      "sales": 45
+    },
+    "quarantined": {
+      "catalogue": 60,
+      "opening_stock": 0,
+      "opening_in_transit": 0,
+      "baskets": 0,
+      "receipts": 0,
+      "offers": 479,
+      "market_feed": 8191,
+      "buyback_quotes": 0,
+      "sales_ranks": 0,
+      "prices": 0,
+      "sales": 45,
+      "disposals": 0,
+      "warehouse_daily": 0
+    },
+    "bad_rows_caught": 1.0,
+    "good_rows_quarantined": 0
+  },
+  "models": {
+    "market_price": {
+      "feed_titles": {
+        "engine": {
+          "median_abs_pct_error": 5.77,
+          "mean_abs_log_error": 0.0747,
+          "titles": 8989
+        },
+        "rule_last_price": {
+          "median_abs_pct_error": 9.49,
+          "mean_abs_log_error": 0.1213,
+          "titles": 8989
+        }
+      },
+      "cold_start_titles": {
+        "engine": {
+          "median_abs_pct_error": 25.69,
+          "mean_abs_log_error": 0.3031,
+          "titles": 2625
+        },
+        "rule_share_of_list_price": {
+          "median_abs_pct_error": 83.14,
+          "mean_abs_log_error": 0.6632,
+          "titles": 2625
+        },
+        "p10_p90_coverage": 0.752
+      }
+    },
+    "price_response": {
+      "beta": {
+        "bluray": {
+          "estimated": 4.635,
+          "true": 5.0
+        },
+        "cd": {
+          "estimated": 4.472,
+          "true": 5.0
+        },
+        "children": {
+          "estimated": 4.335,
+          "true": 4.0
+        },
+        "comics": {
+          "estimated": 3.85,
+          "true": 4.5
+        },
+        "cookbooks": {
+          "estimated": 3.591,
+          "true": 4.0
+        },
+        "dvd": {
+          "estimated": 5.662,
+          "true": 6.0
+        },
+        "fiction": {
+          "estimated": 5.333,
+          "true": 5.5
+        },
+        "games": {
+          "estimated": 3.408,
+          "true": 3.5
+        },
+        "nonfiction": {
+          "estimated": 3.933,
+          "true": 4.5
+        },
+        "textbooks": {
+          "estimated": 1.86,
+          "true": 2.4
+        }
+      },
+      "beta_max_abs_rel_error": 0.225,
+      "beta_mean_abs_rel_error": 0.097,
+      "depth_power": {
+        "estimated": 0.922,
+        "true": 1.0
+      },
+      "condition_factors": {
+        "like_new": {
+          "estimated": 1.099,
+          "true": 1.1
+        },
+        "very_good": {
+          "estimated": 1.0,
+          "true": 1.0
+        },
+        "good": {
+          "estimated": 0.881,
+          "true": 0.88
+        },
+        "acceptable": {
+          "estimated": 0.711,
+          "true": 0.72
+        }
+      }
+    },
+    "demand_calibration": {
+      "overall_ratio": 1.051,
+      "by_age_days": {
+        "0-30": 1.056,
+        "31-90": 1.028,
+        "91-180": 1.036,
+        ">180": 1.079
+      },
+      "by_category": {
+        "bluray": 0.92,
+        "cd": 1.073,
+        "children": 1.062,
+        "comics": 0.946,
+        "cookbooks": 1.145,
+        "dvd": 1.058,
+        "fiction": 1.13,
+        "games": 1.188,
+        "nonfiction": 0.875,
+        "textbooks": 1.086
+      },
+      "units": 27017
+    },
+    "sellability_90d": {
+      "units": 27017,
+      "predicted_mean": 0.4068,
+      "realised_mean": 0.3618,
+      "expected_calibration_error": 0.045,
+      "auc": 0.7432,
+      "auc_sales_rank_rule": 0.6048
+    },
+    "grading": {
+      "receipts": 34409,
+      "log_loss_model": 1.5172,
+      "log_loss_overall_rates": 1.5382
+    },
+    "acceptance": {
+      "offers": 25819,
+      "mean_abs_error": 0.0763,
+      "predicted_mean": 0.5102,
+      "true_mean": 0.502
+    }
+  },
+  "backtest": {
+    "horizon_days": 182,
+    "headline": {
+      "seeds": 5,
+      "value_pct": 37.01,
+      "value_pct_lo": 35.76,
+      "value_pct_hi": 38.26,
+      "value_eur": 53658.66,
+      "cash_pct": -23.68,
+      "returns_pct": 75.41,
+      "value_incl_sellers_pct": 40.01
+    },
+    "uplift": {
+      "value": {
+        "diff": 53658.66,
+        "lo": 51848.27,
+        "hi": 55469.04,
+        "control": 144986.74,
+        "pct": 37.01,
+        "pct_lo": 35.76,
+        "pct_hi": 38.26,
+        "seeds": 5
+      },
+      "cash": {
+        "diff": -14413.42,
+        "lo": -16979.78,
+        "hi": -11847.07,
+        "control": 60867.15,
+        "pct": -23.68,
+        "pct_lo": -27.9,
+        "pct_hi": -19.46,
+        "seeds": 5
+      },
+      "value_incl_sellers": {
+        "diff": 62920.66,
+        "lo": 60891.86,
+        "hi": 64949.45,
+        "control": 157268.74,
+        "pct": 40.01,
+        "pct_lo": 38.72,
+        "pct_hi": 41.3,
+        "seeds": 5
+      },
+      "revenue": {
+        "diff": 36669.73,
+        "lo": 34463.84,
+        "hi": 38875.62,
+        "control": 286670.5,
+        "pct": 12.79,
+        "pct_lo": 12.02,
+        "pct_hi": 13.56,
+        "seeds": 5
+      },
+      "revenue_minus_purchases": {
+        "diff": -7395.02,
+        "lo": -9630.44,
+        "hi": -5159.59,
+        "control": 218379.57,
+        "pct": -3.39,
+        "pct_lo": -4.41,
+        "pct_hi": -2.36,
+        "seeds": 5
+      },
+      "pending_returns": {
+        "diff": 926.2,
+        "lo": 889.46,
+        "hi": 962.94,
+        "control": 1228.2,
+        "pct": 75.41,
+        "pct_lo": 72.42,
+        "pct_hi": 78.4,
+        "seeds": 5
+      },
+      "units_sold": {
+        "diff": -5095.0,
+        "lo": -5416.88,
+        "hi": -4773.12,
+        "control": 47284.4,
+        "pct": -10.78,
+        "pct_lo": -11.46,
+        "pct_hi": -10.09,
+        "seeds": 5
+      },
+      "units_bought": {
+        "diff": 6809.2,
+        "lo": 5573.85,
+        "hi": 8044.55,
+        "control": 56194.0,
+        "pct": 12.12,
+        "pct_lo": 9.92,
+        "pct_hi": 14.32,
+        "seeds": 5
+      }
+    },
+    "runs": [
+      {
+        "policy": "baseline",
+        "seed": 101,
+        "cash": 60491.5,
+        "end_stock_value": 79094.87,
+        "end_transit_value": 3067.74,
+        "value": 142654.11,
+        "pending_returns": 1170,
+        "value_incl_sellers": 154354.11,
+        "revenue": 284710.91,
+        "revenue_minus_purchases": 217421.22,
+        "units_sold": 47094,
+        "units_bought": 55485,
+        "units_liquidated": 4422,
+        "avg_sale_price": 6.05,
+        "avg_paid": 1.21,
+        "basket_sent_rate": 0.4192,
+        "item_keep_rate": 0.3692,
+        "marketing_per_new_seller_trade": 2.2,
+        "max_fill": 0.896,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 30986,
+        "scenario": "base",
+        "seconds": 1.8,
+        "tag": "main"
+      },
+      {
+        "policy": "engine",
+        "seed": 101,
+        "cash": 47670.95,
+        "end_stock_value": 147031.85,
+        "end_transit_value": 3993.51,
+        "value": 198696.3,
+        "pending_returns": 2134,
+        "value_incl_sellers": 220036.3,
+        "revenue": 323243.9,
+        "revenue_minus_purchases": 211947.77,
+        "units_sold": 42190,
+        "units_bought": 62762,
+        "units_liquidated": 16236,
+        "avg_sale_price": 7.66,
+        "avg_paid": 1.77,
+        "basket_sent_rate": 0.5679,
+        "item_keep_rate": 0.581,
+        "marketing_per_new_seller_trade": 1.57,
+        "max_fill": 0.8807,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31353,
+        "scenario": "base",
+        "seconds": 88.5,
+        "tag": "main"
+      },
+      {
+        "policy": "baseline",
+        "seed": 102,
+        "cash": 63588.58,
+        "end_stock_value": 79793.47,
+        "end_transit_value": 3279.74,
+        "value": 146661.78,
+        "pending_returns": 1188,
+        "value_incl_sellers": 158541.78,
+        "revenue": 288092.13,
+        "revenue_minus_purchases": 220482.97,
+        "units_sold": 47291,
+        "units_bought": 55395,
+        "units_liquidated": 4460,
+        "avg_sale_price": 6.09,
+        "avg_paid": 1.22,
+        "basket_sent_rate": 0.4142,
+        "item_keep_rate": 0.3656,
+        "marketing_per_new_seller_trade": 2.21,
+        "max_fill": 0.8775,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 30661,
+        "scenario": "base",
+        "seconds": 2.0,
+        "tag": "main"
+      },
+      {
+        "policy": "engine",
+        "seed": 102,
+        "cash": 47030.23,
+        "end_stock_value": 148664.12,
+        "end_transit_value": 4380.38,
+        "value": 200074.73,
+        "pending_returns": 2079,
+        "value_incl_sellers": 220864.73,
+        "revenue": 323643.05,
+        "revenue_minus_purchases": 211368.06,
+        "units_sold": 42146,
+        "units_bought": 62693,
+        "units_liquidated": 16261,
+        "avg_sale_price": 7.68,
+        "avg_paid": 1.79,
+        "basket_sent_rate": 0.5696,
+        "item_keep_rate": 0.58,
+        "marketing_per_new_seller_trade": 1.55,
+        "max_fill": 0.8791,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31303,
+        "scenario": "base",
+        "seconds": 88.9,
+        "tag": "main"
+      },
+      {
+        "policy": "baseline",
+        "seed": 103,
+        "cash": 57994.81,
+        "end_stock_value": 84996.51,
+        "end_transit_value": 2563.97,
+        "value": 145555.3,
+        "pending_returns": 1274,
+        "value_incl_sellers": 158295.3,
+        "revenue": 288286.4,
+        "revenue_minus_purchases": 217874.25,
+        "units_sold": 47719,
+        "units_bought": 58267,
+        "units_liquidated": 4413,
+        "avg_sale_price": 6.04,
+        "avg_paid": 1.21,
+        "basket_sent_rate": 0.4293,
+        "item_keep_rate": 0.3751,
+        "marketing_per_new_seller_trade": 2.14,
+        "max_fill": 0.9209,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 33152,
+        "scenario": "base",
+        "seconds": 2.1,
+        "tag": "main"
+      },
+      {
+        "policy": "engine",
+        "seed": 103,
+        "cash": 46117.48,
+        "end_stock_value": 148839.61,
+        "end_transit_value": 4071.66,
+        "value": 199028.75,
+        "pending_returns": 2177,
+        "value_incl_sellers": 220798.75,
+        "revenue": 324362.18,
+        "revenue_minus_purchases": 211313.65,
+        "units_sold": 42277,
+        "units_bought": 63377,
+        "units_liquidated": 16955,
+        "avg_sale_price": 7.67,
+        "avg_paid": 1.78,
+        "basket_sent_rate": 0.5747,
+        "item_keep_rate": 0.5825,
+        "marketing_per_new_seller_trade": 1.54,
+        "max_fill": 0.8886,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31162,
+        "scenario": "base",
+        "seconds": 94.8,
+        "tag": "main"
+      },
+      {
+        "policy": "baseline",
+        "seed": 104,
+        "cash": 61358.13,
+        "end_stock_value": 80179.89,
+        "end_transit_value": 3107.35,
+        "value": 144645.37,
+        "pending_returns": 1256,
+        "value_incl_sellers": 157205.37,
+        "revenue": 284658.26,
+        "revenue_minus_purchases": 217508.71,
+        "units_sold": 46970,
+        "units_bought": 55330,
+        "units_liquidated": 4527,
+        "avg_sale_price": 6.06,
+        "avg_paid": 1.21,
+        "basket_sent_rate": 0.4258,
+        "item_keep_rate": 0.3727,
+        "marketing_per_new_seller_trade": 2.13,
+        "max_fill": 0.8791,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 30850,
+        "scenario": "base",
+        "seconds": 2.0,
+        "tag": "main"
+      },
+      {
+        "policy": "engine",
+        "seed": 104,
+        "cash": 46832.98,
+        "end_stock_value": 146444.89,
+        "end_transit_value": 4690.62,
+        "value": 197968.49,
+        "pending_returns": 2199,
+        "value_incl_sellers": 219958.49,
+        "revenue": 323194.01,
+        "revenue_minus_purchases": 211189.63,
+        "units_sold": 42188,
+        "units_bought": 62922,
+        "units_liquidated": 16499,
+        "avg_sale_price": 7.66,
+        "avg_paid": 1.78,
+        "basket_sent_rate": 0.5799,
+        "item_keep_rate": 0.5879,
+        "marketing_per_new_seller_trade": 1.52,
+        "max_fill": 0.8866,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31252,
+        "scenario": "base",
+        "seconds": 92.5,
+        "tag": "main"
+      },
+      {
+        "policy": "baseline",
+        "seed": 105,
+        "cash": 60902.74,
+        "end_stock_value": 82069.57,
+        "end_transit_value": 2444.85,
+        "value": 145417.16,
+        "pending_returns": 1253,
+        "value_incl_sellers": 157947.16,
+        "revenue": 287604.8,
+        "revenue_minus_purchases": 218610.7,
+        "units_sold": 47348,
+        "units_bought": 56493,
+        "units_liquidated": 4403,
+        "avg_sale_price": 6.07,
+        "avg_paid": 1.22,
+        "basket_sent_rate": 0.4227,
+        "item_keep_rate": 0.3712,
+        "marketing_per_new_seller_trade": 2.15,
+        "max_fill": 0.9044,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31759,
+        "scenario": "base",
+        "seconds": 1.8,
+        "tag": "main"
+      },
+      {
+        "policy": "engine",
+        "seed": 105,
+        "cash": 44617.01,
+        "end_stock_value": 149196.28,
+        "end_transit_value": 3645.45,
+        "value": 197458.74,
+        "pending_returns": 2183,
+        "value_incl_sellers": 219288.74,
+        "revenue": 322258.0,
+        "revenue_minus_purchases": 209103.66,
+        "units_sold": 42146,
+        "units_bought": 63262,
+        "units_liquidated": 16718,
+        "avg_sale_price": 7.65,
+        "avg_paid": 1.79,
+        "basket_sent_rate": 0.5763,
+        "item_keep_rate": 0.5845,
+        "marketing_per_new_seller_trade": 1.54,
+        "max_fill": 0.8803,
+        "overflow_unit_days": 0,
+        "items_bought_while_full": 0,
+        "end_stock_units": 31415,
+        "scenario": "base",
+        "seconds": 91.0,
+        "tag": "main"
+      }
+    ],
+    "ledgers": {
+      "baseline:101": {
+        "revenue": 284710.91,
+        "sell_fees": -65653.88,
+        "pick_pack": -25901.7,
+        "purchase": -67289.69,
+        "inbound": -19677.3,
+        "basket_shipping": -16940.0,
+        "disposal": -202.12,
+        "holding": -22221.12,
+        "overflow": 0.0,
+        "liquidation": 221.1,
+        "marketing": -6554.7
+      },
+      "engine:101": {
+        "revenue": 323243.9,
+        "sell_fees": -64953.45,
+        "pick_pack": -23204.5,
+        "purchase": -111296.13,
+        "inbound": -22199.7,
+        "basket_shipping": -25592.0,
+        "disposal": -224.74,
+        "holding": -22359.53,
+        "overflow": 0.0,
+        "liquidation": 811.8,
+        "marketing": -6554.7
+      },
+      "baseline:102": {
+        "revenue": 288092.13,
+        "sell_fees": -66125.64,
+        "pick_pack": -26010.05,
+        "purchase": -67609.16,
+        "inbound": -19585.2,
+        "basket_shipping": -16816.0,
+        "disposal": -197.78,
+        "holding": -21809.12,
+        "overflow": 0.0,
+        "liquidation": 223.0,
+        "marketing": -6573.6
+      },
+      "engine:102": {
+        "revenue": 323643.05,
+        "sell_fees": -64951.97,
+        "pick_pack": -23180.3,
+        "purchase": -112274.99,
+        "inbound": -22115.1,
+        "basket_shipping": -25792.0,
+        "disposal": -220.48,
+        "holding": -22317.43,
+        "overflow": 0.0,
+        "liquidation": 813.05,
+        "marketing": -6573.6
+      },
+      "baseline:103": {
+        "revenue": 288286.4,
+        "sell_fees": -66506.93,
+        "pick_pack": -26245.45,
+        "purchase": -70412.15,
+        "inbound": -20560.8,
+        "basket_shipping": -17532.0,
+        "disposal": -205.38,
+        "holding": -22400.33,
+        "overflow": 0.0,
+        "liquidation": 220.65,
+        "marketing": -6649.2
+      },
+      "engine:103": {
+        "revenue": 324362.18,
+        "sell_fees": -65128.05,
+        "pick_pack": -23252.35,
+        "purchase": -113048.53,
+        "inbound": -22252.2,
+        "basket_shipping": -26208.0,
+        "disposal": -215.94,
+        "holding": -22338.19,
+        "overflow": 0.0,
+        "liquidation": 847.75,
+        "marketing": -6649.2
+      },
+      "baseline:104": {
+        "revenue": 284658.26,
+        "sell_fees": -65543.74,
+        "pick_pack": -25833.5,
+        "purchase": -67149.55,
+        "inbound": -19542.6,
+        "basket_shipping": -16884.0,
+        "disposal": -196.24,
+        "holding": -21920.24,
+        "overflow": 0.0,
+        "liquidation": 226.35,
+        "marketing": -6456.6
+      },
+      "engine:104": {
+        "revenue": 323194.01,
+        "sell_fees": -64947.26,
+        "pick_pack": -23203.4,
+        "purchase": -112004.38,
+        "inbound": -22211.4,
+        "basket_shipping": -25820.0,
+        "disposal": -222.32,
+        "holding": -22320.62,
+        "overflow": 0.0,
+        "liquidation": 824.95,
+        "marketing": -6456.6
+      },
+      "baseline:105": {
+        "revenue": 287604.8,
+        "sell_fees": -66130.23,
+        "pick_pack": -26041.4,
+        "purchase": -68994.1,
+        "inbound": -19983.3,
+        "basket_shipping": -16972.0,
+        "disposal": -202.36,
+        "holding": -22045.02,
+        "overflow": 0.0,
+        "liquidation": 220.15,
+        "marketing": -6553.8
+      },
+      "engine:105": {
+        "revenue": 322258.0,
+        "sell_fees": -64827.32,
+        "pick_pack": -23180.3,
+        "purchase": -113154.34,
+        "inbound": -22372.2,
+        "basket_shipping": -25840.0,
+        "disposal": -226.24,
+        "holding": -22322.69,
+        "overflow": 0.0,
+        "liquidation": 835.9,
+        "marketing": -6553.8
+      }
+    },
+    "ablations": {
+      "engine_sell_only": {
+        "value_of_part": 26283.93,
+        "lo": 25848.12,
+        "hi": 26719.75,
+        "value_of_part_incl_sellers": 35558.93,
+        "seeds": 2
+      },
+      "engine_buy_only": {
+        "value_of_part": 18306.08,
+        "lo": 17770.31,
+        "hi": 18841.85,
+        "value_of_part_incl_sellers": 17136.08,
+        "seeds": 2
+      },
+      "engine_no_market_model": {
+        "value_of_part": 19530.98,
+        "lo": 18395.02,
+        "hi": 20666.94,
+        "value_of_part_incl_sellers": 18415.98,
+        "seeds": 2
+      },
+      "engine_no_capacity": {
+        "value_of_part": 30651.72,
+        "lo": 28983.86,
+        "hi": 32319.58,
+        "value_of_part_incl_sellers": 40966.72,
+        "seeds": 2
+      },
+      "engine_no_long_term": {
+        "value_of_part": -5311.97,
+        "lo": -5481.55,
+        "hi": -5142.38,
+        "value_of_part_incl_sellers": 348.03,
+        "seeds": 2
+      }
+    },
+    "ablation_seeds": [
+      101,
+      102
+    ],
+    "long_run": {
+      "baseline": {
+        "cash_by_half_year": [
+          60492.0,
+          76561.0,
+          52520.0,
+          65221.0
+        ],
+        "value": 310750.0,
+        "cash": 254793.44
+      },
+      "engine": {
+        "cash_by_half_year": [
+          47671.0,
+          108904.0,
+          80916.0,
+          91092.0
+        ],
+        "value": 467292.13,
+        "cash": 328583.11
+      },
+      "second_year_cash_uplift_pct": 46.09
+    },
+    "guardrails": {
+      "below_min_price": 0,
+      "above_list_price_share": 0,
+      "outside_steering_band": 0,
+      "weekly_change_too_large": 0,
+      "prices_checked": 4338719
+    },
+    "scenarios": {
+      "dev": [
+        {
+          "scenario": "capacity-cut",
+          "baseline_value": 138879.78,
+          "engine_value": 197866.49,
+          "uplift_pct": 42.47,
+          "engine_cash": 69426.27,
+          "baseline_cash": 69363.5,
+          "engine_returns_vs_baseline": 1.822,
+          "engine_max_fill": 1.007,
+          "engine_overflow_unit_days": 477,
+          "baseline_overflow_unit_days": 419,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "seller-surge",
+          "baseline_value": 144424.55,
+          "engine_value": 197939.41,
+          "uplift_pct": 37.05,
+          "engine_cash": 41027.71,
+          "baseline_cash": 55851.45,
+          "engine_returns_vs_baseline": 1.888,
+          "engine_max_fill": 0.8871,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "textbook-demand-shift",
+          "baseline_value": 138631.62,
+          "engine_value": 183723.32,
+          "uplift_pct": 32.53,
+          "engine_cash": 38098.54,
+          "baseline_cash": 54526.18,
+          "engine_returns_vs_baseline": 1.727,
+          "engine_max_fill": 0.8874,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        }
+      ],
+      "heldout": [
+        {
+          "scenario": "competitor-exit-and-reentry",
+          "baseline_value": 140865.37,
+          "engine_value": 194638.26,
+          "uplift_pct": 38.17,
+          "engine_cash": 40104.29,
+          "baseline_cash": 55674.01,
+          "engine_returns_vs_baseline": 2.042,
+          "engine_max_fill": 0.8831,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "slow-burn-recession",
+          "baseline_value": 86658.94,
+          "engine_value": 116985.29,
+          "uplift_pct": 35.0,
+          "engine_cash": 14421.49,
+          "baseline_cash": 34534.91,
+          "engine_returns_vs_baseline": 2.512,
+          "engine_max_fill": 0.9103,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "spring-clearout-warehouse-squeeze",
+          "baseline_value": 127454.35,
+          "engine_value": 190380.45,
+          "uplift_pct": 49.37,
+          "engine_cash": 67692.49,
+          "baseline_cash": 67292.15,
+          "engine_returns_vs_baseline": 2.332,
+          "engine_max_fill": 1.1619,
+          "engine_overflow_unit_days": 32195,
+          "baseline_overflow_unit_days": 47804,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "textbook-curriculum-switch",
+          "baseline_value": 128752.68,
+          "engine_value": 170301.2,
+          "uplift_pct": 32.27,
+          "engine_cash": 29963.19,
+          "baseline_cash": 46947.57,
+          "engine_returns_vs_baseline": 1.963,
+          "engine_max_fill": 0.8881,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        },
+        {
+          "scenario": "tv-adaptation-boom-bust",
+          "baseline_value": 160166.61,
+          "engine_value": 215075.56,
+          "uplift_pct": 34.28,
+          "engine_cash": 63280.3,
+          "baseline_cash": 80036.34,
+          "engine_returns_vs_baseline": 1.727,
+          "engine_max_fill": 0.8842,
+          "engine_overflow_unit_days": 0,
+          "baseline_overflow_unit_days": 0,
+          "engine_items_bought_while_full": 0,
+          "baseline_items_bought_while_full": 0,
+          "engine_guardrail_violations": 0
+        }
+      ],
+      "heldout_first_run": {
+        "recorded_at": "2026-10-23T14:55:31+00:00",
+        "results": [
+          {
+            "scenario": "competitor-exit-and-reentry",
+            "baseline_value": 140865.37,
+            "engine_value": 194638.26,
+            "uplift_pct": 38.17,
+            "engine_cash": 40104.29,
+            "baseline_cash": 55674.01,
+            "engine_returns_vs_baseline": 2.042,
+            "engine_max_fill": 0.8831,
+            "engine_overflow_unit_days": 0,
+            "baseline_overflow_unit_days": 0,
+            "engine_guardrail_violations": 0
+          },
+          {
+            "scenario": "slow-burn-recession",
+            "baseline_value": 86658.94,
+            "engine_value": 116985.29,
+            "uplift_pct": 35.0,
+            "engine_cash": 14421.49,
+            "baseline_cash": 34534.91,
+            "engine_returns_vs_baseline": 2.512,
+            "engine_max_fill": 0.9103,
+            "engine_overflow_unit_days": 0,
+            "baseline_overflow_unit_days": 0,
+            "engine_guardrail_violations": 0
+          },
+          {
+            "scenario": "spring-clearout-warehouse-squeeze",
+            "baseline_value": 127454.35,
+            "engine_value": 190380.45,
+            "uplift_pct": 49.37,
+            "engine_cash": 67692.49,
+            "baseline_cash": 67292.15,
+            "engine_returns_vs_baseline": 2.332,
+            "engine_max_fill": 1.1619,
+            "engine_overflow_unit_days": 32195,
+            "baseline_overflow_unit_days": 47804,
+            "engine_guardrail_violations": 0
+          },
+          {
+            "scenario": "textbook-curriculum-switch",
+            "baseline_value": 128752.68,
+            "engine_value": 170301.2,
+            "uplift_pct": 32.27,
+            "engine_cash": 29963.19,
+            "baseline_cash": 46947.57,
+            "engine_returns_vs_baseline": 1.963,
+            "engine_max_fill": 0.8881,
+            "engine_overflow_unit_days": 0,
+            "baseline_overflow_unit_days": 0,
+            "engine_guardrail_violations": 0
+          },
+          {
+            "scenario": "tv-adaptation-boom-bust",
+            "baseline_value": 160166.61,
+            "engine_value": 215075.56,
+            "uplift_pct": 34.28,
+            "engine_cash": 63280.3,
+            "baseline_cash": 80036.34,
+            "engine_returns_vs_baseline": 1.727,
+            "engine_max_fill": 0.8842,
+            "engine_overflow_unit_days": 0,
+            "baseline_overflow_unit_days": 0,
+            "engine_guardrail_violations": 0
+          }
+        ]
+      }
+    }
+  },
+  "experiments": {
+    "peeking_null": {
+      "naive_reject_any_look": 0.2575,
+      "naive_reject_at_end": 0.051,
+      "always_valid_reject": 0.013,
+      "mean_looks_to_stop": 27.8115
+    },
+    "peeking_with_effect": {
+      "naive_reject_any_look": 0.986,
+      "naive_reject_at_end": 0.968,
+      "always_valid_reject": 0.823,
+      "mean_looks_to_stop": 16.867
+    },
+    "sell_side_price_test": {
+      "per_seed": [
+        {
+          "seed": 401,
+          "titles": 3604,
+          "srm_p": 0.6173,
+          "true_effect_per_title": -0.6381,
+          "estimate": 1.0514,
+          "ci": [
+            -1.2963,
+            3.399
+          ],
+          "covered": true,
+          "cuped_estimate": 0.8947,
+          "cuped_ci": [
+            -1.0101,
+            2.7995
+          ],
+          "cuped_covered": true,
+          "cuped_variance_removed": 0.341,
+          "relative_effect": -0.0366
+        },
+        {
+          "seed": 402,
+          "titles": 3604,
+          "srm_p": 0.2436,
+          "true_effect_per_title": -0.7245,
+          "estimate": 0.8245,
+          "ci": [
+            -1.553,
+            3.2021
+          ],
+          "covered": true,
+          "cuped_estimate": -0.0002,
+          "cuped_ci": [
+            -1.9376,
+            1.9373
+          ],
+          "cuped_covered": true,
+          "cuped_variance_removed": 0.336,
+          "relative_effect": -0.0412
+        },
+        {
+          "seed": 403,
+          "titles": 3604,
+          "srm_p": 0.4049,
+          "true_effect_per_title": -0.368,
+          "estimate": -0.7986,
+          "ci": [
+            -3.1939,
+            1.5967
+          ],
+          "covered": true,
+          "cuped_estimate": 0.0938,
+          "cuped_ci": [
+            -1.8418,
+            2.0294
+          ],
+          "cuped_covered": true,
+          "cuped_variance_removed": 0.348,
+          "relative_effect": -0.021
+        },
+        {
+          "seed": 404,
+          "titles": 3604,
+          "srm_p": 0.6173,
+          "true_effect_per_title": -0.3696,
+          "estimate": 2.0122,
+          "ci": [
+            -0.3929,
+            4.4173
+          ],
+          "covered": true,
+          "cuped_estimate": 1.1607,
+          "cuped_ci": [
+            -0.7822,
+            3.1036
+          ],
+          "cuped_covered": true,
+          "cuped_variance_removed": 0.349,
+          "relative_effect": -0.0212
+        }
+      ],
+      "coverage": 1.0,
+      "cuped_coverage": 1.0,
+      "a_a": {
+        "splits": 1000,
+        "false_positive_rate_by_title": 0.043,
+        "false_positive_rate_by_copy": 0.543
+      }
+    },
+    "buy_side_offer_test": {
+      "sellers": 1739,
+      "srm_p": 0.8291,
+      "surrogate_effect_on_return_rate": {
+        "diff": 0.2044,
+        "ci": [
+          0.1937,
+          0.2151
+        ]
+      },
+      "realised_effect_on_return_rate": {
+        "diff": 0.1739,
+        "ci": [
+          0.131,
+          0.2167
+        ]
+      },
+      "realised_inside_surrogate_ci": false,
+      "intervals_overlap": true,
+      "basket_sent_rate": {
+        "treatment": 0.7632,
+        "control": 0.4139
+      }
+    }
+  },
+  "api": {
+    "requests": 50,
+    "items": 25,
+    "p50_ms": 23.6,
+    "p95_ms": 28.64,
+    "max_ms": 33.04
+  },
+  "seconds": {
+    "backtests": 1184.8,
+    "models": 8.5,
+    "experiments": 173.9,
+    "total": 1367.3
+  },
+  "gate": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "contracts_bad_rows_caught",
+        "value": 1.0,
+        "bound": "min 1.0",
+        "passed": true,
+        "blocking": true,
+        "why": "every injected bad row is quarantined"
+      },
+      {
+        "check": "contracts_good_rows_quarantined",
+        "value": 0,
+        "bound": "max 0",
+        "passed": true,
+        "blocking": true,
+        "why": "no valid row is lost"
+      },
+      {
+        "check": "engine_value_uplift_pct",
+        "value": 37.01,
+        "bound": "min 10.0",
+        "passed": true,
+        "blocking": true,
+        "why": "six-month value (cash + end stock) vs today's rules"
+      },
+      {
+        "check": "engine_value_uplift_pct_lo",
+        "value": 35.76,
+        "bound": "min 0.0",
+        "passed": true,
+        "blocking": true,
+        "why": "lower end of its 95% interval over market replays"
+      },
+      {
+        "check": "seller_returns_vs_baseline",
+        "value": 1.7541,
+        "bound": "min 0.95",
+        "passed": true,
+        "blocking": true,
+        "why": "the engine does not buy margin by driving sellers away"
+      },
+      {
+        "check": "overflow_unit_days",
+        "value": 0,
+        "bound": "max 0",
+        "passed": true,
+        "blocking": true,
+        "why": "never more stock than shelf slots"
+      },
+      {
+        "check": "guardrail_violations",
+        "value": 0,
+        "bound": "max 0",
+        "passed": true,
+        "blocking": true,
+        "why": "every engine price within its guardrails"
+      },
+      {
+        "check": "market_error_feed_vs_rule",
+        "value": 0.6158,
+        "bound": "max 1.0",
+        "passed": true,
+        "blocking": true,
+        "why": "market price at least as accurate as the last competitor price"
+      },
+      {
+        "check": "market_error_cold_vs_rule",
+        "value": 0.457,
+        "bound": "max 1.0",
+        "passed": true,
+        "blocking": true,
+        "why": "cold-start price at least as accurate as the list-price rule"
+      },
+      {
+        "check": "demand_calibration_ratio",
+        "value": 1.051,
+        "bound": "min 0.9 and max 1.1",
+        "passed": true,
+        "blocking": true,
+        "why": "predicted vs true sales of the stock"
+      },
+      {
+        "check": "sellability_ece",
+        "value": 0.045,
+        "bound": "max 0.06",
+        "passed": true,
+        "blocking": true,
+        "why": "90-day sellability calibrated against realised sales"
+      },
+      {
+        "check": "sellability_auc_gain_vs_rank",
+        "value": 0.1384,
+        "bound": "min 0.05",
+        "passed": true,
+        "blocking": true,
+        "why": "ranks stock better than the sales rank the rules use"
+      },
+      {
+        "check": "aa_false_positive_rate",
+        "value": 0.043,
+        "bound": "min 0.02 and max 0.08",
+        "passed": true,
+        "blocking": true,
+        "why": "A/A tests analysed by title reject about 5%"
+      },
+      {
+        "check": "sequential_false_positive_rate",
+        "value": 0.013,
+        "bound": "max 0.05",
+        "passed": true,
+        "blocking": true,
+        "why": "daily-peeked tests stay within 5% with the always-valid p-value"
+      },
+      {
+        "check": "sell_test_ci_coverage",
+        "value": 1.0,
+        "bound": "min 0.75",
+        "passed": true,
+        "blocking": true,
+        "why": "the price test's interval contains the true effect"
+      },
+      {
+        "check": "items_bought_while_full",
+        "value": 0,
+        "bound": "max 0",
+        "passed": true,
+        "blocking": true,
+        "why": "never buys while stock and parcels exceed the shelves, in any run or scenario"
+      },
+      {
+        "check": "scenario_guardrail_violations",
+        "value": 0,
+        "bound": "max 0",
+        "passed": true,
+        "blocking": true,
+        "why": "guardrails hold in every stress scenario"
+      },
+      {
+        "check": "scenario_overflow_vs_rules",
+        "value": 0.678,
+        "bound": "",
+        "passed": null,
+        "blocking": false,
+        "why": "tracked"
+      },
+      {
+        "check": "heldout_scenarios_engine_ahead",
+        "value": 1.0,
+        "bound": "",
+        "passed": null,
+        "blocking": false,
+        "why": "tracked"
+      },
+      {
+        "check": "surrogate_intervals_overlap",
+        "value": 1.0,
+        "bound": "",
+        "passed": null,
+        "blocking": false,
+        "why": "tracked"
+      },
+      {
+        "check": "long_run_cash_uplift_pct",
+        "value": 46.09,
+        "bound": "",
+        "passed": null,
+        "blocking": false,
+        "why": "tracked"
+      },
+      {
+        "check": "price_response_mean_abs_rel_error",
+        "value": 0.097,
+        "bound": "",
+        "passed": null,
+        "blocking": false,
+        "why": "tracked"
+      }
+    ]
+  }
+}

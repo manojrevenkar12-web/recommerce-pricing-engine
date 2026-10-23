@@ -129,7 +129,7 @@ def score(r: Result, w: World, start_returns: int, cfg: dict[str, Any]) -> dict[
         "pending_returns": int(end["pending_returns"]),
         "value_incl_sellers": round(value + per_return * end["pending_returns"], 2),
         "revenue": round(r.ledger["revenue"], 2),
-        "gross_margin": round(r.ledger["revenue"] + r.ledger["purchase"], 2),
+        "revenue_minus_purchases": round(r.ledger["revenue"] + r.ledger["purchase"], 2),
         "units_sold": int(C["units_sold"]),
         "units_bought": int(C["units_received"]),
         "units_liquidated": int(C["units_liquidated"]),
@@ -140,6 +140,7 @@ def score(r: Result, w: World, start_returns: int, cfg: dict[str, Any]) -> dict[
         "marketing_per_new_seller_trade": round(-r.ledger["marketing"] / max(C["new_baskets_sent"], 1), 2),
         "max_fill": round(C["max_fill"], 4),
         "overflow_unit_days": int(C["overflow_unit_days"]),
+        "items_bought_while_full": int(C["items_bought_while_full"]),
         "end_stock_units": len(r.state.u_id),
         "ledger": {k: round(v, 2) for k, v in r.ledger.items()},
     }
