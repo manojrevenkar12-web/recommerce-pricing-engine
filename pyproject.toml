@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recommerce-pricing-engine"
+version = "0.1.0"
+description = "Pricing and AI for second-hand books and media: buy offers, buy/no-buy, dynamic sell prices, sellability and market-price models, warehouse-aware buying, experiments with long-term effects, and steering for business management."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Manoj Kumar Prakash" }]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=15",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "lightgbm>=4.3",
+  "duckdb>=1.1",
+  "pyyaml>=6",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "pydantic>=2.6",
+  "prometheus-client>=0.20",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6", "mypy>=1.10", "types-PyYAML"]
+
+[project.scripts]
+rpe = "rpe.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rpe = ["sql/*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["pipeline: needs the generated history and trained models (built once per test session)"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "B008", "SIM108"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/rpe"]
+ignore_missing_imports = true
+check_untyped_defs = false

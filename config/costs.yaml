@@ -1,0 +1,19 @@
+# Unit economics, owned by Finance & Controlling. The company knows these; the simulator charges
+# exactly these, and the engine optimises against them.
+sell:
+  fee_rate: 0.09            # blended marketplace commission and payment fee, share of price
+  fee_fixed: 0.85           # blended fixed fee and shipping subsidy per sale, EUR
+  pick_pack: 0.55           # outbound picking and packing per sale, EUR
+  min_price: 1.49           # no listing below this
+buy:
+  inbound_handling: 0.30    # unpack, grade, label, shelve; also paid for rejected items
+  basket_shipping: 4.00     # the seller's parcel label, paid by us per basket sent
+  reject_disposal: 0.02     # recycling a rejected item
+  min_offer: 0.10           # smallest offer shown; below it the app says "not buying this"
+stock:
+  holding_per_unit_day: 0.004   # space, insurance, capital
+  liquidation_value: 0.08       # bulk buyer pays per unit
+  liquidation_handling: 0.03
+  max_age_days: 540             # nothing is kept longer
+marketing:
+  cost_per_new_session: 0.90    # paid acquisition of seller sessions

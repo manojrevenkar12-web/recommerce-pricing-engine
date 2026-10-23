@@ -1,0 +1,10 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+/data/
+/models/
+.venv/
+reports/*.json
+!reports/evaluation.json

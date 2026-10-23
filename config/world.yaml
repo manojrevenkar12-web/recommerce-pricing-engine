@@ -1,0 +1,108 @@
+# The simulated market: the "real world" the company cannot see.
+#
+# Only rpe.sim (which plays the market) and rpe.evaluate (which scores policies against it) read
+# this file or anything in data/truth. Models, the pricing engine, the API and the steering report
+# only see what the company would see: the catalogue, the competitor price feed, sales ranks,
+# competitor buy-back quotes, its own offers, receipts, prices and sales.
+#
+# These parameters were fixed before the pricing engine was written, and are not tuned to it.
+
+seed: 20251
+calendar:
+  burn_in_start: 2024-08-01   # simulated but not exported: fills the warehouse
+  history_start: 2025-01-01   # exported history the models are trained on
+  history_end: 2025-12-31
+  forward_days: 182           # evaluation horizon after history (2026-01-01 .. 2026-07-01)
+
+catalogue:
+  titles: 12000
+  demand_sigma: 1.7           # log-normal spread of title demand
+  value_sigma: 0.35           # log-normal spread of market price around the category level
+  categories:
+    # share: of titles; new_price: median list price EUR; value_ratio: used market price / new price
+    # beta, alpha: price response (share of demand at log relative price r is 1/(1+exp(beta*(r-alpha))))
+    # pop_mu: log demand per day of the median title; drift: yearly log change of market price
+    # season: demand curve; grade_shift: worse condition on arrival (+ = worse); kappa: competitor buy-back / market
+    fiction:     {share: 0.29, new_price: 13, value_ratio: 0.34, beta: 5.5, alpha:  0.00, pop_mu: -4.0, drift: -0.06, season: summer,   grade_shift:  0.00, kappa: 0.13}
+    nonfiction:  {share: 0.17, new_price: 20, value_ratio: 0.33, beta: 4.5, alpha:  0.05, pop_mu: -4.3, drift: -0.05, season: flat,     grade_shift: -0.10, kappa: 0.13}
+    children:    {share: 0.10, new_price: 12, value_ratio: 0.36, beta: 4.0, alpha:  0.00, pop_mu: -4.1, drift: -0.03, season: gifting,  grade_shift:  0.35, kappa: 0.12}
+    textbooks:   {share: 0.08, new_price: 42, value_ratio: 0.30, beta: 2.4, alpha:  0.10, pop_mu: -4.5, drift: -0.08, season: semester, grade_shift:  0.10, kappa: 0.16}
+    cookbooks:   {share: 0.06, new_price: 24, value_ratio: 0.32, beta: 4.0, alpha:  0.00, pop_mu: -4.4, drift: -0.04, season: gifting,  grade_shift: -0.05, kappa: 0.12}
+    comics:      {share: 0.05, new_price: 12, value_ratio: 0.40, beta: 4.5, alpha:  0.05, pop_mu: -4.2, drift: -0.02, season: flat,     grade_shift:  0.05, kappa: 0.14}
+    cd:          {share: 0.09, new_price: 13, value_ratio: 0.28, beta: 5.0, alpha: -0.05, pop_mu: -4.5, drift: -0.07, season: gifting,  grade_shift: -0.20, kappa: 0.11}
+    dvd:         {share: 0.09, new_price: 11, value_ratio: 0.26, beta: 6.0, alpha: -0.05, pop_mu: -4.4, drift: -0.10, season: gifting,  grade_shift: -0.15, kappa: 0.10}
+    bluray:      {share: 0.03, new_price: 16, value_ratio: 0.30, beta: 5.0, alpha:  0.00, pop_mu: -4.4, drift: -0.08, season: gifting,  grade_shift: -0.20, kappa: 0.11}
+    games:       {share: 0.04, new_price: 40, value_ratio: 0.30, beta: 3.5, alpha:  0.05, pop_mu: -4.1, drift: -0.30, season: gifting,  grade_shift: -0.10, kappa: 0.16}
+  formats:
+    books: {paperback: 0.62, hardcover: 0.30, special_edition: 0.08}
+    media: {standard: 0.85, special_edition: 0.15}
+  format_value: {paperback: 1.0, hardcover: 1.15, standard: 1.0, special_edition: 1.35}
+  english_share: 0.18
+  english_value: 1.08
+  title_age_elasticity: -0.15     # market price ~ (1 + years since publication)^this
+  games_age_elasticity: -0.35
+  demand_value_elasticity: 0.12   # popular titles hold their price
+  min_market_price: 0.9
+  edition_change_per_year: 0.10   # textbooks: a new edition cuts demand and price of the old one
+  edition_price_factor: 0.40
+  edition_demand_factor: 0.30
+  missing_new_price: 0.03         # share of catalogue rows without a list price
+
+condition:
+  grades: [like_new, very_good, good, acceptable]
+  price_factor: {like_new: 1.10, very_good: 1.00, good: 0.88, acceptable: 0.72}
+  # ordered-logit cut points on a standard-normal latent (higher = worse); last bucket = reject
+  cutpoints: [-1.08, -0.05, 0.80, 1.34]
+  age_shift_per_year: 0.025
+  seller_quality_sigma: 0.40
+
+market_feed:
+  coverage_intercept: 1.2         # P(title has competitor offers) = sigmoid(a + b*log(demand/0.01))
+  coverage_slope: 0.5
+  ar: 0.85                        # competitor lowest price noise: AR(1) on the log scale
+  noise_sd: 0.07
+  dump_rate: 0.02                 # a dumping offer appears: log price -0.35 for 1-5 days
+  dump_size: 0.35
+  missing_day: 0.15
+  offers_base: 2
+  offers_scale: 30
+  quote_coverage: 0.55            # titles with a scraped competitor buy-back quote (weekly)
+  quote_noise: 0.05
+  rank_noise: 0.5                 # sales rank = rank of demand * lognormal(rank_noise), monthly
+  rank_scale: 400                 # our catalogue is a sample of a marketplace with ~5M titles
+
+sellers:
+  new_sessions_per_day: 34
+  basket_mean_items: 26           # 1 + negative binomial
+  basket_dispersion: 2.0
+  supply_demand_power: 0.55       # what sellers own: weight ~ demand^power
+  reservation_sigma: 0.35         # item-level spread of what a seller would accept
+  seller_factor_sigma: 0.30       # some sellers want convenience, some want the best price
+  min_basket_eur: 10.0
+  shipping_days: [4, 7]
+  # P(seller comes back) = sigmoid(intercept + sat*log(offered/competitor quote) + value*log1p(kept EUR/10))
+  return_intercept: -0.55
+  return_satisfaction: 1.4
+  return_value: 0.25
+  return_intercept_abandoned: -1.8
+  return_delay_days: [15, 150]
+  no_offer_satisfaction: 0.3
+
+warehouse:
+  capacity_units: 36000
+  overflow_cost_per_unit_day: 0.03   # external storage when full
+
+season:
+  # demand curves: bumps on the day of year, (centre, width in days, height)
+  flat: []
+  summer: [[200, 35, 0.25]]
+  gifting: [[340, 20, 0.70], [15, 10, 0.15]]
+  semester: [[268, 25, 0.80], [95, 20, 0.45], [205, 30, -0.30]]
+  supply: [[30, 30, 0.35], [100, 20, 0.20], [215, 25, -0.15]]
+
+dirty_data:
+  # extra rows that break the contracts, so ingest can be checked against what was injected
+  feed_bad_price: 0.003
+  catalogue_bad_ean: 0.005
+  offers_duplicate: 0.001
+  sales_bad_day: 0.0005

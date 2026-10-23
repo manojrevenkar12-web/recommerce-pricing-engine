@@ -1,0 +1,26 @@
+# The current rule-based pricing ("v0"), as Pricing runs it today. It is the control in every
+# backtest and experiment, and it generated the 2025 history the models learn from.
+buy:
+  # offer = rate(sales-rank bucket) x competitor lowest used price - deduction
+  rank_buckets: [20000, 200000, 800000, 2000000]
+  rates: [0.28, 0.22, 0.16, 0.11]          # beyond the last bucket: not buying
+  deduction: 0.10
+  no_feed_offer: 0.15                      # no competitor price: flat offer if rank is good enough
+  no_feed_max_rank: 300000
+  stop_buying_fill: 0.97                   # stop all buying above this warehouse fill
+sell:
+  undercut: 0.01                           # list one cent below the competitor lowest price
+  condition_factor: {like_new: 1.05, very_good: 1.00, good: 0.95, acceptable: 0.85}
+  no_feed_ratio: 0.40                      # no competitor price: share of the list price
+  no_feed_default: 3.99
+  markdowns: [[120, 0.85], [240, 0.70]]    # after N days in stock, multiply by
+  liquidate_after_days: 365
+  reprice_weekday: 0                       # Monday
+exploration:
+  # The randomised price tests Pricing ran during 2025, logged with their assignment. They are what
+  # makes the price response of buyers and sellers measurable from history.
+  offer_share: 0.15
+  offer_multiplier: [0.6, 1.5]             # log-uniform
+  sell_share: 0.20                         # share of titles, re-drawn every 4 weeks
+  sell_multiplier: [0.7, 1.4]
+  sell_period_days: 28
